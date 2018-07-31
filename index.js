@@ -78,6 +78,7 @@ const StartGameHandler = {
         const responseMessage = playRound(handlerInput);
         return handlerInput.responseBuilder
             .speak(responseMessage)
+            .reprompt(ANSWERPROMPT_MESSAGE)
             .getResponse();
     }
 };
