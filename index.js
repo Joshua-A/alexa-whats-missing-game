@@ -64,11 +64,9 @@ const StartGameHandler = {
             attributes.state !== 'playing';
     },
     handle(handlerInput) {
-        const attributes = handlerInput.attributesManager.getSessionAttributes();
-        attributes.state = 'playing';
-        handlerInput.attributesManager.setSessionAttributes(attributes);
+        const responseMessage = playRound(handlerInput);
         return handlerInput.responseBuilder
-            .speak(pickRandomListItem(STARTNEW_MESSAGES))
+            .speak(responseMessage)
             .getResponse();
     }
 }
@@ -183,6 +181,9 @@ function playRound(handlerInput) {
     // Set game state
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     attributes.state = 'playing';
+    handlerInput.attributesManager.setSessionAttributes(attributes);
+    // Add start of response
+    response += pickRandomListItem(STARTNEW_MESSAGES);
     // Generate new random list of objects
     const itemListStart = generateItemList(3);
     // Add the list to the response
