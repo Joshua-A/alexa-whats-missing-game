@@ -61,7 +61,7 @@ const LaunchRequestHandler = {
             .reprompt(READY_MESSAGE)
             .getResponse();
     }
-}
+};
 
 // When a user tries to start a new game at the start or end
 const StartGameHandler = {
@@ -80,7 +80,7 @@ const StartGameHandler = {
             .speak(responseMessage)
             .getResponse();
     }
-}
+};
 
 // When a user tries to start a new game and one is in progress
 const RestartGameHandler = {
@@ -95,7 +95,7 @@ const RestartGameHandler = {
     handle(handlerInput) {
 
     }
-}
+};
 
 // When a user provides an answer
 const AnswerHandler = {
@@ -109,7 +109,7 @@ const AnswerHandler = {
     handle(handlerInput) {
 
     }
-}
+};
 
 // When a user says no to a new game or chooses to exit
 const QuitHandler = {
@@ -125,7 +125,7 @@ const QuitHandler = {
     handle(handlerInput) {
 
     }
-}
+};
 
 /* Skills builder */
 const skillBuilder = Alexa.SkillBuilders.custom();
@@ -175,7 +175,7 @@ function randomiseList(list) {
 function generateItemList(amount) {
     var tempItemList = ITEM_LIST.slice;
     var returnList = [];
-    for (i = 0; i < amount; i++) {
+    for (var i = 0; i < amount; i++) {
         const max = tempItemList.length;
         const randPos = getRandomInt(0, max);
         returnList.push(tempItemList[randPos]);
@@ -192,9 +192,9 @@ function removeOneAndShuffle(itemList, handlerInput) {
     var subList = randomiseList(tempList);
     // Remove last item in the list and save as a session attribute
     const attributes = handlerInput.attributesManager.getSessionAttributes();
-    attributes.removed = subList[sublist.length - 1]; // Initialise the session state attribute
+    attributes.removed = subList[subList.length - 1]; // Initialise the session state attribute
     handlerInput.attributesManager.setSessionAttributes(attributes);
-    sublist.splice(sublist.size - 1, 1);
+    subList.splice(subList.size - 1, 1);
     return subList;
 }
 
@@ -205,7 +205,7 @@ function readList(itemList) {
     if (len == 1) { // Only item in list
         returnString = itemList[0].article + ' ' + itemList[0].noun;
     } else {
-        for (i = 0; i < len; i++) {
+        for (var i = 0; i < len; i++) {
             if (i == len - 1) { // Last element in list
                 returnString += 'and ';
             }
