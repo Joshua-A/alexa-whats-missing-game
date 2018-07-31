@@ -234,7 +234,7 @@ function playRound(handlerInput) {
     response += pickRandomListItem(PRESHUFFLE_MESSAGES);
     response += '<audio src=\'https://s3.amazonaws.com/ask-soundlibrary/foley/amzn_sfx_swoosh_cartoon_fast_02.mp3\'/>';
     // Generate sublist containing elements in a random order with one removed.
-    const itemListEnd = removeOneAndShuffle(itemListStart);
+    const itemListEnd = removeOneAndShuffle(itemListStart, handlerInput);
     // Add the sublist to the response
     response += pickRandomListItem(POSTSHUFFLE_MESSAGES);
     response += readList(itemListEnd);
