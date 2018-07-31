@@ -19,6 +19,17 @@ const STARTNEW_MESSAGES = [
     'Okay then, let\'s begin.',
     'Alright then, off we go.'
 ];
+const PRESHUFFLE_MESSAGES = [
+    'Now, I\'m going to remove one. Wait just a moment!',
+    'Now, I\'m going to take one away. Bear with me!',
+    'Now, I\'m going to get rid of one. Be right back!'
+];
+const POSTSHUFFLE_MESSAGES = [
+    'All done! Now listen carefully while I tell you what I have left.',
+    'There we go! Now pay close attention as I tell you what I\'m left with',
+    'That should do it! Now listen closely, because now I\'m going to tell you what I have remaining'
+];
+const ANSWERPROMPT_MESSAGE = 'What\'s Missing?';
 
 const ITEM_LIST = [
     {"noun" : "apple", "article" : "an"},
@@ -43,7 +54,7 @@ const LaunchRequestHandler = {
     },
     handle(handlerInput) {
         const attributes = handlerInput.attributesManager.getSessionAttributes();
-        attributes.state = 'start'; // Initialise the session state var
+        attributes.state = 'start'; // Initialise the session state attribute
         handlerInput.attributesManager.setSessionAttributes(attributes);
         return handlerInput.responseBuilder
             .speak(WELCOME_MESSAGE)
@@ -144,6 +155,21 @@ function pickRandomListItem(list) {
     return list[randPos];
 }
 
+// Randomises the elements in a list and returns it
+// @param list The list to randomise
+function randomiseList(list) {
+    var initialList = list.slice;
+    var returnList = [];
+    while (initialList.length != 0)
+    {
+        const max = initialList.length;
+        const randPos = getRandomInt(0, max);
+        returnList.push(initialList[randPos]);
+        initialList.splice(randPos, 1);
+    }
+    return returnList;
+}
+
 // Returns a list containing random objects
 // @param amount The number of objects in the list
 function generateItemList(amount) {
@@ -158,9 +184,23 @@ function generateItemList(amount) {
     return returnList;
 }
 
+// Returns a randomly ordered item list missing one item
+// @param itemList The list to randomise and remove from
+function removeOneAndShuffle(itemList, handlerInput) {
+    var tempList = itemList.slice;
+    // Randomly sort list
+    var subList = randomiseList(tempList);
+    // Remove last item in the list and save as a session attribute
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    attributes.removed = subList[sublist.length - 1]; // Initialise the session state attribute
+    handlerInput.attributesManager.setSessionAttributes(attributes);
+    sublist.splice(sublist.size - 1, 1);
+    return subList;
+}
+
 // Returns a list of items in a string to be read by Alexa
 function readList(itemList) {
-    var returnString;
+    var returnString = 'I have ';
     const len = itemList.length;
     if (len == 1) { // Only item in list
         returnString = itemList[0].article + ' ' + itemList[0].noun;
@@ -172,6 +212,7 @@ function readList(itemList) {
             returnString += itemList[i] + ' ' + itemList[i].noun + ', ';
         }
     }
+    returnString += '.';
     return returnString;
 }
 
@@ -187,10 +228,17 @@ function playRound(handlerInput) {
     // Generate new random list of objects
     const itemListStart = generateItemList(3);
     // Add the list to the response
-    response += 'I have ';
     response += readList(itemListStart);
     // Add part 2 explaination to the response
+    response += '<break time="500ms"/>';
+    response += pickRandomListItem(PRESHUFFLE_MESSAGES);
+    response += '<audio src=\'https://s3.amazonaws.com/ask-soundlibrary/foley/amzn_sfx_swoosh_cartoon_fast_02.mp3\'/>';
     // Generate sublist containing elements in a random order with one removed.
+    const itemListEnd = removeOneAndShuffle(itemListStart);
     // Add the sublist to the response
+    response += pickRandomListItem(POSTSHUFFLE_MESSAGES);
+    response += readList(itemListEnd);
     // Add the prompt for an answer
+    response += ANSWERPROMPT_MESSAGE;
+    return response;
 }
