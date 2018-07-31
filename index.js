@@ -6,7 +6,7 @@
  
 const Alexa = require('ask-sdk-core');
 
-/* LABELS */
+/* STRINGS & LISTS */
 
 const WELCOME_MESSAGE = 
 'Welcome to What\'s Missing! \
@@ -20,7 +20,18 @@ const STARTNEW_MESSAGES = [
     'Alright then, off we go.'
 ];
 
-
+const ITEM_LIST = [
+    {"noun" : "apple", "article" : "an"},
+    {"noun" : "pear", "article" : "a"},
+    {"noun" : "banana", "article" : "a"},
+    {"noun" : "cake", "article" : "a"},
+    {"noun" : "biscuit", "article" : "a"},
+    {"noun" : "car", "article" : "a"},
+    {"noun" : "train", "article" : "a"},
+    {"noun" : "cat", "article" : "a"},
+    {"noun" : "dog", "article" : "a"},
+    {"noun" : "sheep", "article" : "a"},
+];
 
 /* HANDLERS */
 
@@ -32,7 +43,7 @@ const LaunchRequestHandler = {
     },
     handle(handlerInput) {
         const attributes = handlerInput.attributesManager.getSessionAttributes();
-        attributes.stage = 'start'; // Initialise the session stage var
+        attributes.state = 'start'; // Initialise the session state var
         handlerInput.attributesManager.setSessionAttributes(attributes);
         return handlerInput.responseBuilder
             .speak(WELCOME_MESSAGE)
@@ -47,17 +58,17 @@ const StartGameHandler = {
         const request = handlerInput.requestEnvelope.request;
         const attributes = handlerInput.attributesManager.getSessionAttributes();
         return request.type === 'IntentRequest' &&
-            (request.intent.name === "StartGameIntent" ||
-            request.intent.name === "AMAZON.StartOverIntent" ||
-            request.intent.name === "AMAZON.YesIntent") &&
-            attributes.stage !== 'playing';
+            (request.intent.name === 'StartGameIntent' ||
+            request.intent.name === 'AMAZON.StartOverIntent' ||
+            request.intent.name === 'AMAZON.YesIntent') &&
+            attributes.state !== 'playing';
     },
     handle(handlerInput) {
         const attributes = handlerInput.attributesManager.getSessionAttributes();
-        attributes.stage = 'playing';
+        attributes.state = 'playing';
         handlerInput.attributesManager.setSessionAttributes(attributes);
         return handlerInput.responseBuilder
-            .speak(pickRandomLabel(STARTNEW_MESSAGES))
+            .speak(pickRandomListItem(STARTNEW_MESSAGES))
             .getResponse();
     }
 }
@@ -70,7 +81,7 @@ const RestartGameHandler = {
         return request.type === 'IntentRequest' &&
             (request.intent.name === 'StartGameIntent' ||
             request.intent.name === 'AMAZON.StartOverIntent') &&
-            attributes.stage === 'playing';
+            attributes.state === 'playing';
     },
     handle(handlerInput) {
 
@@ -84,7 +95,7 @@ const AnswerHandler = {
         const attributes = handlerInput.attributesManager.getSessionAttributes();
         return request.type === 'IntentRequest' &&
             request.intent.name === 'AnswerIntent' &&
-            attributes.stage === 'playing';
+            attributes.state === 'playing';
     },
     handle(handlerInput) {
 
@@ -100,7 +111,7 @@ const QuitHandler = {
             (request.intent.name === 'AMAZON.NoIntent' ||
             request.intent.name === 'AMAZON.StopIntent' ||
             request.intent.name === 'AMAZON.CancelIntent') &&
-            attributes.stage === 'playing';
+            attributes.state === 'playing';
     },
     handle(handlerInput) {
 
@@ -120,14 +131,65 @@ exports.handler = skillBuilder.addRequestHandlers(
 
 /* HELPER FUNCTIONS */
 
+// Returns a random integer between mix and max. The maximum is exclusive and the minimum is inclusive
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+    return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function pickRandomLabel(labelList) {
-    var max = labelList.length;
-    var randPos = getRandomInt(0, max);
-    return labelList[randPos];
+// Return a random item from a list
+// @param list The list to pick from
+function pickRandomListItem(list) {
+    const max = list.length;
+    const randPos = getRandomInt(0, max);
+    return list[randPos];
+}
+
+// Returns a list containing random objects
+// @param amount The number of objects in the list
+function generateItemList(amount) {
+    var tempItemList = ITEM_LIST.slice;
+    var returnList = [];
+    for (i = 0; i < amount; i++) {
+        const max = tempItemList.length;
+        const randPos = getRandomInt(0, max);
+        returnList.push(tempItemList[randPos]);
+        tempItemList.splice(randPos, 1);
+    }
+    return returnList;
+}
+
+// Returns a list of items in a string to be read by Alexa
+function readList(itemList) {
+    var returnString;
+    const len = itemList.length;
+    if (len == 1) { // Only item in list
+        returnString = itemList[0].article + ' ' + itemList[0].noun;
+    } else {
+        for (i = 0; i < len; i++) {
+            if (i == len - 1) { // Last element in list
+                returnString += 'and ';
+            }
+            returnString += itemList[i] + ' ' + itemList[i].noun + ', ';
+        }
+    }
+    return returnString;
+}
+
+// Put together a new game round, and builds the response
+function playRound(handlerInput) {
+    var response;
+    // Set game state
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    attributes.state = 'playing';
+    // Generate new random list of objects
+    const itemListStart = generateItemList(3);
+    // Add the list to the response
+    response += 'I have ';
+    response += readList(itemListStart);
+    // Add part 2 explaination to the response
+    // Generate sublist containing elements in a random order with one removed.
+    // Add the sublist to the response
+    // Add the prompt for an answer
 }
