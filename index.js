@@ -15,19 +15,19 @@ then shuffle them up and remove one item. It will be your job to tell me \
 which item I have removed. Are you ready?';
 const READY_MESSAGE = 'Are you ready to play?';
 const STARTNEW_MESSAGES = [
-    '<say-as interpret-as="interjection">okey dokey</say-as>, here we go.',
-    'Okay then, let\'s begin.',
-    'Alright then, off we go.'
+    '<say-as interpret-as="interjection">okey dokey</say-as>, here we go. ',
+    'Okay then, let\'s begin. ',
+    'Alright then, off we go. '
 ];
 const PRESHUFFLE_MESSAGES = [
-    'Now, I\'m going to remove one. Wait just a moment!',
-    'Now, I\'m going to take one away. Bear with me!',
-    'Now, I\'m going to get rid of one. Be right back!'
+    'Now, I\'m going to remove one. Wait just a moment! ',
+    'Now, I\'m going to take one away. Bear with me! ',
+    'Now, I\'m going to get rid of one. Be right back! '
 ];
 const POSTSHUFFLE_MESSAGES = [
-    'All done! Now listen carefully while I tell you what I have left.',
-    'There we go! Now pay close attention as I tell you what I\'m left with',
-    'That should do it! Now listen closely, because now I\'m going to tell you what I have remaining'
+    'All done! Now listen carefully while I tell you what I have left. ',
+    'There we go! Now pay close attention as I tell you what I\'m left with. ',
+    'That should do it! Now listen closely, because now I\'m going to tell you what I have remaining. '
 ];
 const ANSWERPROMPT_MESSAGE = 'What\'s Missing?';
 
@@ -209,16 +209,16 @@ function readList(itemList) {
             if (i == len - 1) { // Last element in list
                 returnString += 'and ';
             }
-            returnString += itemList[i] + ' ' + itemList[i].noun + ', ';
+            returnString += itemList[i].article + ' ' + itemList[i].noun + ', ';
         }
     }
-    returnString += '.';
+    returnString += '. ';
     return returnString;
 }
 
 // Put together a new game round, and builds the response
 function playRound(handlerInput) {
-    var response;
+    var response = '';
     // Set game state
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     attributes.state = 'playing';
