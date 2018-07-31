@@ -158,7 +158,7 @@ function pickRandomListItem(list) {
 // Randomises the elements in a list and returns it
 // @param list The list to randomise
 function randomiseList(list) {
-    var initialList = list.slice;
+    var initialList = list.slice();
     var returnList = [];
     while (initialList.length != 0)
     {
@@ -173,7 +173,7 @@ function randomiseList(list) {
 // Returns a list containing random objects
 // @param amount The number of objects in the list
 function generateItemList(amount) {
-    var tempItemList = ITEM_LIST.slice;
+    var tempItemList = ITEM_LIST.slice();
     var returnList = [];
     for (var i = 0; i < amount; i++) {
         const max = tempItemList.length;
@@ -187,7 +187,7 @@ function generateItemList(amount) {
 // Returns a randomly ordered item list missing one item
 // @param itemList The list to randomise and remove from
 function removeOneAndShuffle(itemList, handlerInput) {
-    var tempList = itemList.slice;
+    var tempList = itemList.slice();
     // Randomly sort list
     var subList = randomiseList(tempList);
     // Remove last item in the list and save as a session attribute
