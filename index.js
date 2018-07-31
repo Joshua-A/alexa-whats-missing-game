@@ -212,6 +212,7 @@ function readList(itemList) {
             returnString += itemList[i].article + ' ' + itemList[i].noun + ', ';
         }
     }
+    returnString = returnString.substring(0, returnString.length - 2);
     returnString += '. ';
     return returnString;
 }
