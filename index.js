@@ -343,9 +343,11 @@ function resolveAnswer(handlerInput) {
     const playerAnswer = handlerInput.requestEnvelope.request.intent.slots.answer.value;
     const isPlayerCorrect = checkAnswer(correctAnswer, playerAnswer);
     if (isPlayerCorrect) {
-        response += CORRECTANSWER_SOUND + pickRandomListItem(CORRECTANSWER_MESSAGES) +
-                    INAROW_PREPRESSAGE + attributes.combo + INAROW_POSTMESSAGE +
-                    pickRandomListItem(INCREASEDIFFICULTY_MESSAGES);
+        response += CORRECTANSWER_SOUND + pickRandomListItem(CORRECTANSWER_MESSAGES);
+        if (attributes.combo > 1) {
+            response += INAROW_PREPRESSAGE + attributes.combo + INAROW_POSTMESSAGE;
+        }
+        response += pickRandomListItem(INCREASEDIFFICULTY_MESSAGES);
         attributes.difficulty = attributes.difficulty + 1;
     } else {
         response += INCORRECTANSWER_SOUND + pickRandomListItem(INCORRECTANSWER_MESSAGES) + 
