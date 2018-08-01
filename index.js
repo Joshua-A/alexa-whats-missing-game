@@ -11,12 +11,12 @@ const Alexa = require('ask-sdk-core');
 const WELCOME_MESSAGE = 
 'Welcome to What\'s Missing! \
 If this is your first time playing, say <say-as interpret-as="interjection">help</say-as>, \
-and I\'ll teach you how to play! Otherwise, tell me when you\'re ready, and I\'ll begin.';
+and I\'ll go through the instructions with you. Otherwise, tell me when you\'re ready, and I\'ll begin.';
 const INSTRUCTIONS_MESSAGE = 
 'In this game, I will list off some items I have here with me. \
 remember what I say, because I\'m going to shuffle them up and remove one item. \
 When I\'m done, it will be your job to tell me which item I have removed. \
-Are you ready to play?';
+Remember, answers such as, <prosody rate="slow" pitch="high"><say-as interpret-as="interjection">an</say-as></prosody> apple, are better than just, apple.';
 const READY_MESSAGE = 'Are you ready to play?';
 const RESTART_MESSAGE = 'Alright, let\'s start again. ';
 const STARTNEW_MESSAGES = [
@@ -139,7 +139,6 @@ const AnswerHandler = {
 const QuitHandler = {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
-        const attributes = handlerInput.attributesManager.getSessionAttributes();
         return request.type === 'IntentRequest' &&
             (request.intent.name === 'AMAZON.NoIntent' ||
             request.intent.name === 'AMAZON.StopIntent' ||
@@ -152,13 +151,38 @@ const QuitHandler = {
     }
 };
 
+// When a user asks for help or instructions
+const HelpHandler = {
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'IntentRequest' &&
+            (request.intent.name === 'AMAZON.HelpIntent');
+    },
+    handle(handlerInput) {
+        const attributes = handlerInput.attributesManager.getSessionAttributes();
+        var response = INSTRUCTIONS_MESSAGE;
+        var endResponse = '';
+        if (attributes.state !== 'playing') {
+            endResponse += READY_MESSAGE;
+        } else {
+            endResponse += ANSWERPROMPT_MESSAGE;
+        }
+        response += endResponse;
+        return handlerInput.responseBuilder
+            .speak(pickRandomListItem(GOODBYE_MESSAGES))
+            .reprompt(endResponse)
+            .getResponse();
+    }
+};
+
 /* Skills builder */
 const skillBuilder = Alexa.SkillBuilders.custom();
 exports.handler = skillBuilder.addRequestHandlers(
         LaunchRequestHandler,
         StartGameHandler,
         AnswerHandler,
-        QuitHandler
+        QuitHandler,
+        HelpHandler
     ).lambda();
 
 
