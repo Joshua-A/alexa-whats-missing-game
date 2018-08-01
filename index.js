@@ -67,7 +67,7 @@ const GOODBYE_MESSAGES = [
     'See you again soon! '
 ];
 const FALLBACK_MESSAGE = 'I\'m sorry, I\'m not sure what you are trying to do. \
-You can always say help to hear instructions, or restart to start a new game. ';
+You can always say help to hear instructions, or say restart to start a new game. ';
 
 /* HANDLERS */
 
