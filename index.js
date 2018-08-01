@@ -47,6 +47,7 @@ const INCORRECTANSWER_MESSAGES = [
     'I\'m afraid not. '
 ];
 const GIVECORRECT_MESSAGE = 'The correct answer was ';
+const ASKNEWGAME_MESSAGE = 'Would you like to play another round? ';
 
 const ITEM_LIST = [
     {"noun" : "apple", "article" : "an"},
@@ -115,7 +116,11 @@ const AnswerHandler = {
             attributes.state === 'playing';
     },
     handle(handlerInput) {
-
+        const responseMessage = resolveAnswer(handlerInput);
+        return handlerInput.responseBuilder
+            .speak(responseMessage)
+            .reprompt(ASKNEWGAME_MESSAGE)
+            .getResponse();
     }
 };
 
@@ -276,6 +281,11 @@ function playRound(handlerInput) {
 
 // Check the answer provided by the player, and handle end game stuff
 function resolveAnswer(handlerInput) {
+    //Set game state
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    attributes.state = 'gameover';
+    handlerInput.attributesManager.setSessionAttributes(attributes);
+    // Check answer and return appropriate response
     var response = '';
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     const correctAnswer = attributes.removedItem
@@ -287,4 +297,7 @@ function resolveAnswer(handlerInput) {
         response += INCORRECTANSWER_SOUND + pickRandomListItem(INCORRECTANSWER_MESSAGES) + 
                     GIVECORRECT_MESSAGE + correctAnswer.article + ' ' + correctAnswer.noun + '. ';
     }
+    // Prompt for a new game
+    response += ASKNEWGAME_MESSAGE;
+    return response;
 }
