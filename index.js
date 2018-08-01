@@ -16,7 +16,7 @@ const INSTRUCTIONS_MESSAGE =
 'In this game, I will list off some items I have here with me. \
 remember what I say, because I\'m going to shuffle them up and remove one item. \
 When I\'m done, it will be your job to tell me which item I have removed. \
-Remember, answers such as, <prosody rate="slow" pitch="high"><say-as interpret-as="interjection">an</say-as></prosody> apple, are better than just, apple.';
+Remember, answers such as, <prosody rate="slow" pitch="high"><say-as interpret-as="interjection">an</say-as></prosody> apple, are better than just, apple. ';
 const READY_MESSAGE = 'Are you ready to play?';
 const RESTART_MESSAGE = 'Alright, let\'s start again. ';
 const STARTNEW_MESSAGES = [
@@ -38,9 +38,9 @@ const POSTSHUFFLE_MESSAGES = [
 const ANSWERPROMPT_MESSAGE = 'What\'s Missing?';
 const CORRECTANSWER_SOUND = "<audio src='https://s3.amazonaws.com/ask-soundlibrary/ui/gameshow/amzn_ui_sfx_gameshow_positive_response_03.mp3'/>";
 const CORRECTANSWER_MESSAGES = [
-    '<say-as interpret-as="interjection">Well done</say-as>! That\'s the right answer! ',
-    '<say-as interpret-as="interjection">oh snap</say-as>! That\'s absoulutely correct, well done! ',
-    'Of course that\'s it! Well done! ',
+    '<say-as interpret-as="interjection">Well done</say-as>! That\'s the right answer! I\'ll have to make the next one a bit harder for you. ',
+    '<say-as interpret-as="interjection">oh snap</say-as>! That\'s absoulutely correct, well done! Don\'t worry, I\'ll make the next one a little trickier. ',
+    'Of course that\'s it! Well done! I\'ll make the next round a little more difficult. ',
     '<say-as interpret-as="interjection">hip hip hooray</say-as>! You got it right! Well done! '
 ];
 const INCORRECTANSWER_SOUND = "<audio src='https://s3.amazonaws.com/ask-soundlibrary/ui/gameshow/amzn_ui_sfx_gameshow_negative_response_02.mp3'/>";
@@ -103,6 +103,14 @@ const StartGameHandler = {
     },
     handle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
+        const attributes = handlerInput.attributesManager.getSessionAttributes();
+        if (attributes.difficulty === null) { // How many items to put in the list? Goes up by 1 every win
+            attributes.difficulty = 3;
+        }
+        if (attributes.difficulty < 3) {
+            attributes.difficulty = 3;
+        }
+        handlerInput.attributesManager.setSessionAttributes(attributes);
         var responseMessage = '';
         if (request.intent.name === 'AMAZON.StartOverIntent') {
             responseMessage += RESTART_MESSAGE;
@@ -295,7 +303,7 @@ function playRound(handlerInput) {
     attributes.state = 'playing';
     handlerInput.attributesManager.setSessionAttributes(attributes);
     // Generate new random list of objects
-    const itemListStart = generateItemList(3);
+    const itemListStart = generateItemList(attributes.difficulty);
     // Add the list to the response
     response += readList(itemListStart);
     // Add part 2 explaination to the response
@@ -317,7 +325,6 @@ function resolveAnswer(handlerInput) {
     //Set game state
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     attributes.state = 'gameover';
-    handlerInput.attributesManager.setSessionAttributes(attributes);
     // Check answer and return appropriate response
     var response = '';
     const correctAnswer = attributes.removedItem;
@@ -325,10 +332,12 @@ function resolveAnswer(handlerInput) {
     const isPlayerCorrect = checkAnswer(correctAnswer, playerAnswer);
     if (isPlayerCorrect) {
         response += CORRECTANSWER_SOUND + pickRandomListItem(CORRECTANSWER_MESSAGES);
+        attributes.difficulty = attributes.difficulty + 1;
     } else {
         response += INCORRECTANSWER_SOUND + pickRandomListItem(INCORRECTANSWER_MESSAGES) + 
                     GIVECORRECT_MESSAGE + correctAnswer.article + ' ' + correctAnswer.noun + '. ';
     }
+    handlerInput.attributesManager.setSessionAttributes(attributes);
     // Prompt for a new game
     response += ASKNEWGAME_MESSAGE;
     return response;
