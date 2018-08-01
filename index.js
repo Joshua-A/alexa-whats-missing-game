@@ -51,7 +51,7 @@ const INCREASEDIFFICULTY_MESSAGES = [
     'I\'ll have to make the next one a bit harder for you. ',
     'Don\'t worry, I\'ll make the next one a little trickier. ',
     ' I\'ll make the next round a little more difficult. '
-]
+];
 const INCORRECTANSWER_SOUND = "<audio src='https://s3.amazonaws.com/ask-soundlibrary/ui/gameshow/amzn_ui_sfx_gameshow_negative_response_02.mp3'/>";
 const INCORRECTANSWER_MESSAGES = [
     'Oh sorry, that isn\'t what I was looking for. ',
