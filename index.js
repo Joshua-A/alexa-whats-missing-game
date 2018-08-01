@@ -14,6 +14,7 @@ I\'m going to list the items I have here with me, \
 then shuffle them up and remove one item. It will be your job to tell me \
 which item I have removed. Are you ready?';
 const READY_MESSAGE = 'Are you ready to play?';
+const RESTART_MESSAGE = 'You want to start again? ';
 const STARTNEW_MESSAGES = [
     '<say-as interpret-as="interjection">okey dokey</say-as>, here we go. ',
     'Okay then, let\'s begin. ',
@@ -33,15 +34,15 @@ const ANSWERPROMPT_MESSAGE = 'What\'s Missing?';
 
 const ITEM_LIST = [
     {"noun" : "apple", "article" : "an"},
-    {"noun" : "pear", "article" : "a"},
+    {"noun" : "orange", "article" : "a", "synonyms" : ["tangerine", "clementine", "satsuma"]},
     {"noun" : "banana", "article" : "a"},
     {"noun" : "cake", "article" : "a"},
-    {"noun" : "biscuit", "article" : "a"},
+    {"noun" : "biscuit", "article" : "a", "synonyms" : ["cookie"]},
     {"noun" : "car", "article" : "a"},
     {"noun" : "train", "article" : "a"},
-    {"noun" : "cat", "article" : "a"},
-    {"noun" : "dog", "article" : "a"},
-    {"noun" : "sheep", "article" : "a"},
+    {"noun" : "cat", "article" : "a", "synonyms" : ["kitty", "kitten", "pussy", "pussy cat"]},
+    {"noun" : "dog", "article" : "a", "synonyms" : ["puppy", "pup", "doggo", "mutt"]},
+    {"noun" : "sheep", "article" : "a"}
 ];
 
 /* HANDLERS */
@@ -75,26 +76,16 @@ const StartGameHandler = {
             attributes.state !== 'playing';
     },
     handle(handlerInput) {
-        const responseMessage = playRound(handlerInput);
+        const request = handlerInput.requestEnvelope.request;
+        var responseMessage = '';
+        if (request.intent.name === 'AMAZON.StartOverIntent') {
+            responseMessage += RESTART_MESSAGE;
+        }
+        responseMessage += playRound(handlerInput);
         return handlerInput.responseBuilder
             .speak(responseMessage)
             .reprompt(ANSWERPROMPT_MESSAGE)
             .getResponse();
-    }
-};
-
-// When a user tries to start a new game and one is in progress
-const RestartGameHandler = {
-    canHandle(handlerInput) {
-        const request = handlerInput.requestEnvelope.request;
-        const attributes = handlerInput.attributesManager.getSessionAttributes();
-        return request.type === 'IntentRequest' &&
-            (request.intent.name === 'StartGameIntent' ||
-            request.intent.name === 'AMAZON.StartOverIntent') &&
-            attributes.state === 'playing';
-    },
-    handle(handlerInput) {
-
     }
 };
 
@@ -200,6 +191,7 @@ function removeOneAndShuffle(itemList, handlerInput) {
 }
 
 // Returns a list of items in a string to be read by Alexa
+// @param itemList The list of items to read out
 function readList(itemList) {
     var returnString = 'I have ';
     const len = itemList.length;
@@ -216,6 +208,27 @@ function readList(itemList) {
     returnString = returnString.substring(0, returnString.length - 2);
     returnString += '. ';
     return returnString;
+}
+
+// Checks the expected answer against the response given by the player
+// @param expected The correct answer object
+// @param actual The answer string provided by the player
+function checkAnswer(expected, actual) {
+    const expectedName = expected.noun;
+    const expectedSynonyms = expected.synonyms;
+    // Direct match when the name of the item matches the response
+    if (expectedName == actual) {
+        return true;
+    }
+    // Close match when one of the items synonyms matches the response
+    if (expectedSynonyms != null && expectedSynonyms.length > 0) {
+        for (syn in expectedSynonyms) {
+            if (syn == actual) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 // Put together a new game round, and builds the response
