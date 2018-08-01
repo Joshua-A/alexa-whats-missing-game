@@ -18,7 +18,7 @@ const INSTRUCTIONS_MESSAGE =
 'In this game, I will list off some items I have here with me. \
 Remember what I say, because I\'m going to shuffle them up and remove one item. \
 When I\'m done, it will be your job to tell me which item I have removed. \
-Remember, answers such as, <prosody rate="slow" pitch="high"><say-as interpret-as="interjection">an</say-as></prosody> apple, are better than just, apple. ';
+Remember, answers such as, <prosody rate="slow" pitch="high"><say-as interpret-as="interjection">an</say-as></prosody> apple, are better than just, apple. So, ';
 const READY_MESSAGE = 'Are you ready to play?';
 const RESTART_MESSAGE = 'Alright, let\'s start again. ';
 const STARTNEW_MESSAGES = [
@@ -189,9 +189,10 @@ const FallbackHandler = {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         const attributes = handlerInput.attributesManager.getSessionAttributes();
-        return request.type === 'AMAZON.FallbackHandler' || 
-                ((request.type === 'AMAZON.YesIntent' || request.type === 'AMAZON.NoIntent') && // Yes or No in the middle of a game
-                attributes.state === 'playing');
+        return request.type === 'IntentRequest' &&
+                (request.intent.name === 'AMAZON.FallbackIntent' || 
+                ((request.intent.name === 'AMAZON.YesIntent' || request.intent.name === 'AMAZON.NoIntent') && // Yes or No in the middle of a game
+                attributes.state === 'playing'));
     },
     handle(handlerInput) {
         const attributes = handlerInput.attributesManager.getSessionAttributes();
