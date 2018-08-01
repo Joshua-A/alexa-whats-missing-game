@@ -1,5 +1,7 @@
 /*
  * "What's Missing?" - An Alexa Skill Memory Game
+ * Main File
+ * 
  * Author: Josh Adams
  * Created: 30/07/18
  */
@@ -44,7 +46,7 @@ const CORRECTANSWER_MESSAGES = [
     '<say-as interpret-as="interjection">Hip hip hooray</say-as>! You got it right! Well done! '
 ];
 const INAROW_PREPRESSAGE = 'That\'s ';
-const INAROW_POSTMESSAGE = ' in a row!'
+const INAROW_POSTMESSAGE = ' in a row! '
 const INCREASEDIFFICULTY_MESSAGES = [
     'I\'ll have to make the next one a bit harder for you. ',
     'Don\'t worry, I\'ll make the next one a little trickier. ',
@@ -63,19 +65,6 @@ const GOODBYE_MESSAGES = [
     'See you later! ',
     'Goodbye! ',
     'See you again soon! '
-];
-
-const ITEM_LIST = [
-    {"noun" : "apple", "article" : "an"},
-    {"noun" : "orange", "article" : "an", "synonyms" : ["tangerine", "clementine", "satsuma"]},
-    {"noun" : "banana", "article" : "a"},
-    {"noun" : "cake", "article" : "a"},
-    {"noun" : "biscuit", "article" : "a", "synonyms" : ["cookie"]},
-    {"noun" : "car", "article" : "a"},
-    {"noun" : "train", "article" : "a"},
-    {"noun" : "cat", "article" : "a", "synonyms" : ["kitty", "kitten", "pussy", "pussy cat"]},
-    {"noun" : "dog", "article" : "a", "synonyms" : ["puppy", "pup", "doggo", "mutt"]},
-    {"noun" : "sheep", "article" : "a"}
 ];
 
 /* HANDLERS */
@@ -236,6 +225,11 @@ function randomiseList(list) {
 // Returns a list containing random objects
 // @param amount The number of objects in the list
 function generateItemList(amount) {
+    // Don't break if we run out of stuff
+    if (amount > ITEM_LIST.length) {
+        amount = ITEM_LIST.length;
+    }
+    // Build a new list and fill it with random things from ITEM_LIST
     var tempItemList = ITEM_LIST.slice();
     var returnList = [];
     for (var i = 0; i < amount; i++) {
@@ -358,3 +352,17 @@ function resolveAnswer(handlerInput) {
     response += ASKNEWGAME_MESSAGE;
     return response;
 }
+
+/* The Item List */
+const ITEM_LIST = [
+    {"noun" : "apple", "article" : "an"},
+    {"noun" : "orange", "article" : "an", "synonyms" : ["tangerine", "clementine", "satsuma"]},
+    {"noun" : "banana", "article" : "a"},
+    {"noun" : "cake", "article" : "a"},
+    {"noun" : "biscuit", "article" : "a", "synonyms" : ["cookie"]},
+    {"noun" : "car", "article" : "a"},
+    {"noun" : "train", "article" : "a"},
+    {"noun" : "cat", "article" : "a", "synonyms" : ["kitty", "kitten", "pussy", "pussy cat"]},
+    {"noun" : "dog", "article" : "a", "synonyms" : ["puppy", "pup", "doggo", "mutt"]},
+    {"noun" : "sheep", "article" : "a"}
+];
