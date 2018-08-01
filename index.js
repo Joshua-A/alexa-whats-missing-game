@@ -46,7 +46,7 @@ const CORRECTANSWER_MESSAGES = [
     '<say-as interpret-as="interjection">Hip hip hooray</say-as>! You got it right! Well done! '
 ];
 const INAROW_PREPRESSAGE = 'That\'s ';
-const INAROW_POSTMESSAGE = ' in a row! '
+const INAROW_POSTMESSAGE = ' in a row! ';
 const INCREASEDIFFICULTY_MESSAGES = [
     'I\'ll have to make the next one a bit harder for you. ',
     'Don\'t worry, I\'ll make the next one a little trickier. ',
@@ -66,6 +66,8 @@ const GOODBYE_MESSAGES = [
     'Goodbye! ',
     'See you again soon! '
 ];
+const FALLBACK_MESSAGE = 'I\'m sorry, I\'m not sure what you are trying to do. \
+You can always say help to hear instructions, or restart to start a new game. ';
 
 /* HANDLERS */
 
@@ -143,10 +145,13 @@ const AnswerHandler = {
 const QuitHandler = {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
+        const attributes = handlerInput.attributesManager.getSessionAttributes();
         return request.type === 'IntentRequest' &&
-            (request.intent.name === 'AMAZON.NoIntent' ||
-            request.intent.name === 'AMAZON.StopIntent' ||
-            request.intent.name === 'AMAZON.CancelIntent');
+            (request.intent.name === 'AMAZON.StopIntent' ||
+            request.intent.name === 'AMAZON.CancelIntent' ||
+                (request.intent.name === 'AMAZON.NoIntent' &&
+                attributes.state !== 'playing')
+            );
     },
     handle(handlerInput) {
         return handlerInput.responseBuilder
@@ -179,6 +184,27 @@ const HelpHandler = {
     }
 };
 
+// When a user says something unexpected
+const FallbackHandler = {
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'AMAZON.FallbackHandler';
+    },
+    handle(handlerInput) {
+        const attributes = handlerInput.attributesManager.getSessionAttributes();
+        var reprompt = ''
+        if (attributes.state === 'playing') {
+            reprompt += ANSWERPROMPT_MESSAGE;
+        } else { 
+            reprompt += READY_MESSAGE;
+        }
+        return handlerInput.responseBuilder
+            .speak(FALLBACK_MESSAGE + reprompt)
+            .reprompt(reprompt)
+            .getResponse();
+    }
+};
+
 /* Skills builder */
 const skillBuilder = Alexa.SkillBuilders.custom();
 exports.handler = skillBuilder.addRequestHandlers(
@@ -186,7 +212,8 @@ exports.handler = skillBuilder.addRequestHandlers(
         StartGameHandler,
         AnswerHandler,
         QuitHandler,
-        HelpHandler
+        HelpHandler,
+        FallbackHandler
     ).lambda();
 
 
