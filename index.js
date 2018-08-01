@@ -195,7 +195,7 @@ const FallbackHandler = {
     },
     handle(handlerInput) {
         const attributes = handlerInput.attributesManager.getSessionAttributes();
-        var reprompt = ''
+        var reprompt = '';
         if (attributes.state === 'playing') {
             reprompt += ANSWERPROMPT_MESSAGE;
         } else { 
