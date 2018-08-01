@@ -317,8 +317,8 @@ function checkAnswer(expected, actual) {
     }
     // Close match when one of the items synonyms matches the response
     if (expectedSynonyms != null && expectedSynonyms.length > 0) {
-        for (var syn in expectedSynonyms) {
-            if (syn == actual) {
+        for (var x in expectedSynonyms) {
+            if (expectedSynonyms[x] == actual) {
                 return true;
             }
         }
