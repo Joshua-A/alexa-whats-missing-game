@@ -188,6 +188,7 @@ const HelpHandler = {
 const FallbackHandler = {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
+        const attributes = handlerInput.attributesManager.getSessionAttributes();
         return request.type === 'AMAZON.FallbackHandler' || 
                 ((request.type === 'AMAZON.YesIntent' || request.type === 'AMAZON.NoIntent') && // Yes or No in the middle of a game
                 attributes.state === 'playing');
