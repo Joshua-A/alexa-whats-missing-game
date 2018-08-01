@@ -14,7 +14,7 @@ I\'m going to list the items I have here with me, \
 then shuffle them up and remove one item. It will be your job to tell me \
 which item I have removed. Are you ready?';
 const READY_MESSAGE = 'Are you ready to play?';
-const RESTART_MESSAGE = 'You want to start again? ';
+const RESTART_MESSAGE = 'Alright, let\'s start again. ';
 const STARTNEW_MESSAGES = [
     '<say-as interpret-as="interjection">okey dokey</say-as>, here we go. ',
     'Okay then, let\'s begin. ',
@@ -48,6 +48,11 @@ const INCORRECTANSWER_MESSAGES = [
 ];
 const GIVECORRECT_MESSAGE = 'The correct answer was ';
 const ASKNEWGAME_MESSAGE = 'Would you like to play another round? ';
+const GOODBYE_MESSAGES = [
+    'See you later!',
+    'Goodbye',
+    'See you again soon!'
+];
 
 const ITEM_LIST = [
     {"noun" : "apple", "article" : "an"},
@@ -97,6 +102,8 @@ const StartGameHandler = {
         var responseMessage = '';
         if (request.intent.name === 'AMAZON.StartOverIntent') {
             responseMessage += RESTART_MESSAGE;
+        } else {
+            responseMessage += pickRandomListItem(STARTNEW_MESSAGES);
         }
         responseMessage += playRound(handlerInput);
         return handlerInput.responseBuilder
@@ -132,11 +139,12 @@ const QuitHandler = {
         return request.type === 'IntentRequest' &&
             (request.intent.name === 'AMAZON.NoIntent' ||
             request.intent.name === 'AMAZON.StopIntent' ||
-            request.intent.name === 'AMAZON.CancelIntent') &&
-            attributes.state === 'playing';
+            request.intent.name === 'AMAZON.CancelIntent');
     },
     handle(handlerInput) {
-
+        return handlerInput.responseBuilder
+            .speak(pickRandomListItem(GOODBYE_MESSAGES))
+            .getResponse();
     }
 };
 
@@ -258,8 +266,6 @@ function playRound(handlerInput) {
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     attributes.state = 'playing';
     handlerInput.attributesManager.setSessionAttributes(attributes);
-    // Add start of response
-    response += pickRandomListItem(STARTNEW_MESSAGES);
     // Generate new random list of objects
     const itemListStart = generateItemList(3);
     // Add the list to the response
