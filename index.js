@@ -25,12 +25,28 @@ const PRESHUFFLE_MESSAGES = [
     'Now, I\'m going to take one away. Bear with me! ',
     'Now, I\'m going to get rid of one. Be right back! '
 ];
+const SHUFFLE_SOUND = "<audio src='https://s3.amazonaws.com/ask-soundlibrary/foley/amzn_sfx_swoosh_cartoon_fast_02.mp3'/>";
 const POSTSHUFFLE_MESSAGES = [
     'All done! Now listen carefully while I tell you what I have left. ',
     'There we go! Now pay close attention as I tell you what I\'m left with. ',
     'That should do it! Now listen closely, because now I\'m going to tell you what I have remaining. '
 ];
 const ANSWERPROMPT_MESSAGE = 'What\'s Missing?';
+const CORRECTANSWER_SOUND = "<audio src='https://s3.amazonaws.com/ask-soundlibrary/ui/gameshow/amzn_ui_sfx_gameshow_positive_response_03.mp3'/>";
+const CORRECTANSWER_MESSAGES = [
+    '<say-as interpret-as="interjection">Well done</say-as>! That\'s the right answer! ',
+    '<say-as interpret-as="interjection">oh snap</say-as>! That\'s absoulutely correct, well done! ',
+    'Of course that\'s it! Well done! ',
+    '<say-as interpret-as="interjection">hip hip hooray</say-as>! You got it right! Well done! '
+];
+const INCORRECTANSWER_SOUND = "<audio src='https://s3.amazonaws.com/ask-soundlibrary/ui/gameshow/amzn_ui_sfx_gameshow_negative_response_02.mp3'/>";
+const INCORRECTANSWER_MESSAGES = [
+    'Oh sorry, that isn\'t what I was looking for. ',
+    '<say-as interpret-as="interjection">oh my</say-as>, I\m afraid that\'s not right. ',
+    'Sorry, that\'s not it. ',
+    'I\'m afraid not. '
+];
+const GIVECORRECT_MESSAGE = 'The correct answer was ';
 
 const ITEM_LIST = [
     {"noun" : "apple", "article" : "an"},
@@ -184,7 +200,7 @@ function removeOneAndShuffle(itemList, handlerInput) {
     var subList = randomiseList(tempList);
     // Remove last item in the list and save as a session attribute
     const attributes = handlerInput.attributesManager.getSessionAttributes();
-    attributes.removed = subList[subList.length - 1]; // Initialise the session state attribute
+    attributes.removedItem = subList[subList.length - 1]; // Keep the removed item, as this is what the players are guessing
     handlerInput.attributesManager.setSessionAttributes(attributes);
     subList.splice(subList.size - 1, 1);
     return subList;
@@ -247,7 +263,7 @@ function playRound(handlerInput) {
     // Add part 2 explaination to the response
     response += '<break time="500ms"/>';
     response += pickRandomListItem(PRESHUFFLE_MESSAGES);
-    response += '<audio src=\'https://s3.amazonaws.com/ask-soundlibrary/foley/amzn_sfx_swoosh_cartoon_fast_02.mp3\'/>';
+    response += SHUFFLE_SOUND;
     // Generate sublist containing elements in a random order with one removed.
     const itemListEnd = removeOneAndShuffle(itemListStart, handlerInput);
     // Add the sublist to the response
@@ -256,4 +272,19 @@ function playRound(handlerInput) {
     // Add the prompt for an answer
     response += ANSWERPROMPT_MESSAGE;
     return response;
+}
+
+// Check the answer provided by the player, and handle end game stuff
+function resolveAnswer(handlerInput) {
+    var response = '';
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const correctAnswer = attributes.removedItem
+    const playerAnswer = handlerInput.requestEnvelope.request.intent.slots.answer.value;
+    const isPlayerCorrect = checkAnswer(correctAnswer, playerAnswer);
+    if (isPlayerCorrect) {
+        response += CORRECTANSWER_SOUND + pickRandomListItem(CORRECTANSWER_MESSAGES);
+    } else {
+        response += INCORRECTANSWER_SOUND + pickRandomListItem(INCORRECTANSWER_MESSAGES) + 
+                    GIVECORRECT_MESSAGE + correctAnswer.article + ' ' + correctAnswer.noun + '. ';
+    }
 }
