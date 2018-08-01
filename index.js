@@ -51,7 +51,7 @@ const ASKNEWGAME_MESSAGE = 'Would you like to play another round? ';
 
 const ITEM_LIST = [
     {"noun" : "apple", "article" : "an"},
-    {"noun" : "orange", "article" : "a", "synonyms" : ["tangerine", "clementine", "satsuma"]},
+    {"noun" : "orange", "article" : "an", "synonyms" : ["tangerine", "clementine", "satsuma"]},
     {"noun" : "banana", "article" : "a"},
     {"noun" : "cake", "article" : "a"},
     {"noun" : "biscuit", "article" : "a", "synonyms" : ["cookie"]},
@@ -206,7 +206,7 @@ function removeOneAndShuffle(itemList, handlerInput) {
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     attributes.removedItem = subList[subList.length - 1]; // Keep the removed item, as this is what the players are guessing
     handlerInput.attributesManager.setSessionAttributes(attributes);
-    subList.splice(subList.size - 1, 1);
+    subList.splice(-1, 1);
     return subList;
 }
 
