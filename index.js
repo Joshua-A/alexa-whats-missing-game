@@ -188,7 +188,9 @@ const HelpHandler = {
 const FallbackHandler = {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
-        return request.type === 'AMAZON.FallbackHandler';
+        return request.type === 'AMAZON.FallbackHandler' || 
+                ((request.type === 'AMAZON.YesIntent' || request.type === 'AMAZON.NoIntent') && // Yes or No in the middle of a game
+                attributes.state === 'playing');
     },
     handle(handlerInput) {
         const attributes = handlerInput.attributesManager.getSessionAttributes();
@@ -373,6 +375,7 @@ function resolveAnswer(handlerInput) {
     } else {
         response += INCORRECTANSWER_SOUND + pickRandomListItem(INCORRECTANSWER_MESSAGES) + 
                     GIVECORRECT_MESSAGE + correctAnswer.article + ' ' + correctAnswer.noun + '. ';
+        attributes.combo = 0;
     }
     handlerInput.attributesManager.setSessionAttributes(attributes);
     // Prompt for a new game
