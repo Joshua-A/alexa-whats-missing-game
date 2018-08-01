@@ -10,9 +10,13 @@ const Alexa = require('ask-sdk-core');
 
 const WELCOME_MESSAGE = 
 'Welcome to What\'s Missing! \
-I\'m going to list the items I have here with me, \
-then shuffle them up and remove one item. It will be your job to tell me \
-which item I have removed. Are you ready?';
+If this is your first time playing, say <say-as interpret-as="interjection">help</say-as>, \
+and I\'ll teach you how to play! Otherwise, tell me when you\'re ready, and I\'ll begin.';
+const INSTRUCTIONS_MESSAGE = 
+'In this game, I will list off some items I have here with me. \
+remember what I say, because I\'m going to shuffle them up and remove one item. \
+When I\'m done, it will be your job to tell me which item I have removed. \
+Are you ready to play?';
 const READY_MESSAGE = 'Are you ready to play?';
 const RESTART_MESSAGE = 'Alright, let\'s start again. ';
 const STARTNEW_MESSAGES = [
