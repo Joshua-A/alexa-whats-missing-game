@@ -38,11 +38,18 @@ const POSTSHUFFLE_MESSAGES = [
 const ANSWERPROMPT_MESSAGE = 'What\'s Missing?';
 const CORRECTANSWER_SOUND = "<audio src='https://s3.amazonaws.com/ask-soundlibrary/ui/gameshow/amzn_ui_sfx_gameshow_positive_response_03.mp3'/>";
 const CORRECTANSWER_MESSAGES = [
-    '<say-as interpret-as="interjection">Well done</say-as>! That\'s the right answer! I\'ll have to make the next one a bit harder for you. ',
-    '<say-as interpret-as="interjection">oh snap</say-as>! That\'s absoulutely correct, well done! Don\'t worry, I\'ll make the next one a little trickier. ',
-    'Of course that\'s it! Well done! I\'ll make the next round a little more difficult. ',
+    '<say-as interpret-as="interjection">Well done</say-as>! That\'s the right answer! ',
+    '<say-as interpret-as="interjection">oh snap</say-as>! That\'s absoulutely correct, well done! ',
+    'Of course that\'s it! Well done! ',
     '<say-as interpret-as="interjection">hip hip hooray</say-as>! You got it right! Well done! '
 ];
+const INAROW_PREPRESSAGE = 'That\'s ';
+const INAROW_POSTMESSAGE = ' in a row!'
+const INCREASEDIFFICULTY_MESSAGES = [
+    'I\'ll have to make the next one a bit harder for you. ',
+    'Don\'t worry, I\'ll make the next one a little trickier. ',
+    ' I\'ll make the next round a little more difficult. '
+]
 const INCORRECTANSWER_SOUND = "<audio src='https://s3.amazonaws.com/ask-soundlibrary/ui/gameshow/amzn_ui_sfx_gameshow_negative_response_02.mp3'/>";
 const INCORRECTANSWER_MESSAGES = [
     'Oh sorry, that isn\'t what I was looking for. ',
@@ -325,13 +332,20 @@ function resolveAnswer(handlerInput) {
     //Set game state
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     attributes.state = 'gameover';
+    if (attributes.combo == null || attributes.combo < 1) {
+        attributes.combo = 1;
+    } else {
+        attributes.combo++;
+    }
     // Check answer and return appropriate response
     var response = '';
     const correctAnswer = attributes.removedItem;
     const playerAnswer = handlerInput.requestEnvelope.request.intent.slots.answer.value;
     const isPlayerCorrect = checkAnswer(correctAnswer, playerAnswer);
     if (isPlayerCorrect) {
-        response += CORRECTANSWER_SOUND + pickRandomListItem(CORRECTANSWER_MESSAGES);
+        response += CORRECTANSWER_SOUND + pickRandomListItem(CORRECTANSWER_MESSAGES) +
+                    INAROW_PREPRESSAGE + attributes.combo + INAROW_POSTMESSAGE +
+                    pickRandomListItem(INCREASEDIFFICULTY_MESSAGES);
         attributes.difficulty = attributes.difficulty + 1;
     } else {
         response += INCORRECTANSWER_SOUND + pickRandomListItem(INCORRECTANSWER_MESSAGES) + 
