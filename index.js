@@ -14,13 +14,13 @@ If this is your first time playing, say <say-as interpret-as="interjection">help
 and I\'ll go through the instructions with you. Otherwise, tell me when you\'re ready, and I\'ll begin.';
 const INSTRUCTIONS_MESSAGE = 
 'In this game, I will list off some items I have here with me. \
-remember what I say, because I\'m going to shuffle them up and remove one item. \
+Remember what I say, because I\'m going to shuffle them up and remove one item. \
 When I\'m done, it will be your job to tell me which item I have removed. \
 Remember, answers such as, <prosody rate="slow" pitch="high"><say-as interpret-as="interjection">an</say-as></prosody> apple, are better than just, apple. ';
 const READY_MESSAGE = 'Are you ready to play?';
 const RESTART_MESSAGE = 'Alright, let\'s start again. ';
 const STARTNEW_MESSAGES = [
-    '<say-as interpret-as="interjection">okey dokey</say-as>, here we go. ',
+    '<say-as interpret-as="interjection">Ookey dokey</say-as>, here we go. ',
     'Okay then, let\'s begin. ',
     'Alright then, off we go. '
 ];
@@ -39,9 +39,9 @@ const ANSWERPROMPT_MESSAGE = 'What\'s Missing?';
 const CORRECTANSWER_SOUND = "<audio src='https://s3.amazonaws.com/ask-soundlibrary/ui/gameshow/amzn_ui_sfx_gameshow_positive_response_03.mp3'/>";
 const CORRECTANSWER_MESSAGES = [
     '<say-as interpret-as="interjection">Well done</say-as>! That\'s the right answer! ',
-    '<say-as interpret-as="interjection">oh snap</say-as>! That\'s absoulutely correct, well done! ',
+    '<say-as interpret-as="interjection">Oh snap</say-as>! That\'s absoulutely correct, well done! ',
     'Of course that\'s it! Well done! ',
-    '<say-as interpret-as="interjection">hip hip hooray</say-as>! You got it right! Well done! '
+    '<say-as interpret-as="interjection">Hip hip hooray</say-as>! You got it right! Well done! '
 ];
 const INAROW_PREPRESSAGE = 'That\'s ';
 const INAROW_POSTMESSAGE = ' in a row!'
@@ -53,16 +53,16 @@ const INCREASEDIFFICULTY_MESSAGES = [
 const INCORRECTANSWER_SOUND = "<audio src='https://s3.amazonaws.com/ask-soundlibrary/ui/gameshow/amzn_ui_sfx_gameshow_negative_response_02.mp3'/>";
 const INCORRECTANSWER_MESSAGES = [
     'Oh sorry, that isn\'t what I was looking for. ',
-    '<say-as interpret-as="interjection">oh my</say-as>, I\m afraid that\'s not right. ',
+    '<say-as interpret-as="interjection">oh my</say-as>, I\'m afraid that\'s not right. ',
     'Sorry, that\'s not it. ',
     'I\'m afraid not. '
 ];
 const GIVECORRECT_MESSAGE = 'The correct answer was ';
 const ASKNEWGAME_MESSAGE = 'Would you like to play another round? ';
 const GOODBYE_MESSAGES = [
-    'See you later!',
-    'Goodbye',
-    'See you again soon!'
+    'See you later! ',
+    'Goodbye! ',
+    'See you again soon! '
 ];
 
 const ITEM_LIST = [
