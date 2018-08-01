@@ -169,7 +169,7 @@ const HelpHandler = {
         }
         response += endResponse;
         return handlerInput.responseBuilder
-            .speak(pickRandomListItem(GOODBYE_MESSAGES))
+            .speak(response)
             .reprompt(endResponse)
             .getResponse();
     }
