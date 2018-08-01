@@ -145,7 +145,6 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 exports.handler = skillBuilder.addRequestHandlers(
         LaunchRequestHandler,
         StartGameHandler,
-        RestartGameHandler,
         AnswerHandler,
         QuitHandler
     ).lambda();
@@ -243,7 +242,7 @@ function checkAnswer(expected, actual) {
     }
     // Close match when one of the items synonyms matches the response
     if (expectedSynonyms != null && expectedSynonyms.length > 0) {
-        for (syn in expectedSynonyms) {
+        for (var syn in expectedSynonyms) {
             if (syn == actual) {
                 return true;
             }
@@ -287,8 +286,7 @@ function resolveAnswer(handlerInput) {
     handlerInput.attributesManager.setSessionAttributes(attributes);
     // Check answer and return appropriate response
     var response = '';
-    const attributes = handlerInput.attributesManager.getSessionAttributes();
-    const correctAnswer = attributes.removedItem
+    const correctAnswer = attributes.removedItem;
     const playerAnswer = handlerInput.requestEnvelope.request.intent.slots.answer.value;
     const isPlayerCorrect = checkAnswer(correctAnswer, playerAnswer);
     if (isPlayerCorrect) {
