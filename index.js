@@ -20,7 +20,7 @@ Remember, answers such as, <prosody rate="slow" pitch="high"><say-as interpret-a
 const READY_MESSAGE = 'Are you ready to play?';
 const RESTART_MESSAGE = 'Alright, let\'s start again. ';
 const STARTNEW_MESSAGES = [
-    '<say-as interpret-as="interjection">Ookey dokey</say-as>, here we go. ',
+    '<say-as interpret-as="interjection">Okey dokey</say-as>, here we go. ',
     'Okay then, let\'s begin. ',
     'Alright then, off we go. '
 ];
@@ -111,7 +111,7 @@ const StartGameHandler = {
     handle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         const attributes = handlerInput.attributesManager.getSessionAttributes();
-        if (attributes.difficulty === null) { // How many items to put in the list? Goes up by 1 every win
+        if (attributes.difficulty == null) { // How many items to put in the list? Goes up by 1 every win
             attributes.difficulty = 3;
         }
         if (attributes.difficulty < 3) {
@@ -124,7 +124,7 @@ const StartGameHandler = {
         } else {
             responseMessage += pickRandomListItem(STARTNEW_MESSAGES);
         }
-        responseMessage += playRound(handlerInput);
+        responseMessage += playRound(handlerInput, attributes.difficulty);
         return handlerInput.responseBuilder
             .speak(responseMessage)
             .reprompt(ANSWERPROMPT_MESSAGE)
@@ -303,14 +303,14 @@ function checkAnswer(expected, actual) {
 }
 
 // Put together a new game round, and builds the response
-function playRound(handlerInput) {
+function playRound(handlerInput, difficulty) {
     var response = '';
     // Set game state
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     attributes.state = 'playing';
     handlerInput.attributesManager.setSessionAttributes(attributes);
     // Generate new random list of objects
-    const itemListStart = generateItemList(attributes.difficulty);
+    const itemListStart = generateItemList(difficulty);
     // Add the list to the response
     response += readList(itemListStart);
     // Add part 2 explaination to the response
