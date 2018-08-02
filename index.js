@@ -22,7 +22,7 @@ Remember, answers such as, <prosody rate="slow" pitch="high"><say-as interpret-a
 const READY_MESSAGE = 'Are you ready to play?';
 const RESTART_MESSAGE = 'Alright, let\'s start again. ';
 const STARTNEW_MESSAGES = [
-    '<say-as interpret-as="interjection">Okey dokey</say-as>, here we go. ',
+    'Right, here we go. ',
     'Okay then, let\'s begin. ',
     'Alright then, off we go. '
 ];
@@ -33,17 +33,17 @@ const PRESHUFFLE_MESSAGES = [
 ];
 const SHUFFLE_SOUND = "<audio src='https://s3.amazonaws.com/ask-soundlibrary/foley/amzn_sfx_swoosh_cartoon_fast_02.mp3'/>";
 const POSTSHUFFLE_MESSAGES = [
-    'All done! Now listen carefully. ', // while I tell you what I have left. ',
-    'There we go! Now pay close attention. ', // as I tell you what I\'m left with. ',
-    'That should do it! Now listen closely. ' // because now I\'m going to tell you what I have remaining. '
+    'All done! Now, listen carefully. ', // while I tell you what I have left. ',
+    'There we go! Now, pay close attention. ', // as I tell you what I\'m left with. ',
+    'That should do it! Now, listen closely. ' // because now I\'m going to tell you what I have remaining. '
 ];
 const ANSWERPROMPT_MESSAGE = 'What\'s Missing?';
 const CORRECTANSWER_SOUND = "<audio src='https://s3.amazonaws.com/ask-soundlibrary/ui/gameshow/amzn_ui_sfx_gameshow_positive_response_03.mp3'/>";
 const CORRECTANSWER_MESSAGES = [
     '<say-as interpret-as="interjection">Well done</say-as>! That\'s the right answer! ',
-    '<say-as interpret-as="interjection">Oh snap</say-as>! That\'s absolutely correct, well done! ',
-    'Of course that\'s it! Well done! ',
-    '<say-as interpret-as="interjection">Hip hip hooray</say-as>! You got it right! Well done! '
+    '<say-as interpret-as="interjection">Yes</say-as>! That\'s  correct, well done! ',
+    'That\'s absolutely right! Well done! ',
+    '<say-as interpret-as="interjection">Hooray</say-as>! You got it right! Well done! '
 ];
 const INAROW_PREPRESSAGE = 'That\'s ';
 const INAROW_POSTMESSAGE = ' in a row! ';
@@ -55,7 +55,7 @@ const INCREASEDIFFICULTY_MESSAGES = [
 const INCORRECTANSWER_SOUND = "<audio src='https://s3.amazonaws.com/ask-soundlibrary/ui/gameshow/amzn_ui_sfx_gameshow_negative_response_02.mp3'/>";
 const INCORRECTANSWER_MESSAGES = [
     'Oh sorry, that isn\'t what I was looking for. ',
-    '<say-as interpret-as="interjection">oh my</say-as>, I\'m afraid that\'s not right. ',
+    '<say-as interpret-as="interjection">Oh my</say-as>, I\'m afraid that\'s not right. ',
     'Sorry, that\'s not it. ',
     'I\'m afraid not. '
 ];
