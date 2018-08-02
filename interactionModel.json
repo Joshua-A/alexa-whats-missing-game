@@ -1,0 +1,159 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "whats missing",
+            "intents": [
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.YesIntent",
+                    "samples": [
+                        "I would love to",
+                        "I'd love to",
+                        "I would",
+                        "I am"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NoIntent",
+                    "samples": []
+                },
+                {
+                    "name": "StartGameIntent",
+                    "slots": [],
+                    "samples": [
+                        "begin a game",
+                        "start playing",
+                        "start a game",
+                        "start a new game",
+                        "can we start again",
+                        "can we restart",
+                        "I want to restart",
+                        "let's play again",
+                        "let's play",
+                        "play again",
+                        "start again",
+                        "restart the game",
+                        "restart game",
+                        "restart",
+                        "go",
+                        "ready",
+                        "begin",
+                        "start game",
+                        "start",
+                        "let's go",
+                        "play",
+                        "I'm ready",
+                        "start the game"
+                    ]
+                },
+                {
+                    "name": "AnswerIntent",
+                    "slots": [
+                        {
+                            "name": "answer",
+                            "type": "AMAZON.SearchQuery",
+                            "samples": [
+                                "it's {answer}",
+                                "it was {answer}",
+                                "it was a {answer}",
+                                "it was an {answer}",
+                                "I said a {answer}",
+                                "I said an {answer}",
+                                "it's an {answer}",
+                                "it's a {answer}",
+                                "an {answer}",
+                                "a {answer}",
+                                "{answer}",
+                                "I said {answer}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "maybe {answer}",
+                        "was it {answer}",
+                        "it's {answer}",
+                        "is it {answer}",
+                        "umm an {answer}",
+                        "umm a {answer}",
+                        "uhh an {answer}",
+                        "uhh a {answer}",
+                        "was it a {answer}",
+                        "I think it was an {answer}",
+                        "is it an {answer}",
+                        "you're missing an {answer}",
+                        "it's a {answer}",
+                        "maybe an {answer}",
+                        "it was an {answer}",
+                        "an {answer}",
+                        "maybe a {answer}",
+                        "it's an {answer}",
+                        "it was a {answer}",
+                        "you're missing a {answer}",
+                        "the {answer}",
+                        "was it an {answer}",
+                        "i think it was a {answer}",
+                        "uhh {answer}",
+                        "umm {answer}",
+                        "is it a {answer}",
+                        "a {answer}"
+                    ]
+                },
+                {
+                    "name": "AMAZON.StartOverIntent",
+                    "samples": []
+                }
+            ],
+            "types": []
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "AnswerIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "answer",
+                            "type": "AMAZON.SearchQuery",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.895177176861.455599792889"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.895177176861.455599792889",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Could you repeat that?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Could you say that again?"
+                    }
+                ]
+            }
+        ]
+    }
+}
