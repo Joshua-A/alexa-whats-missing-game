@@ -38,7 +38,7 @@ const POSTSHUFFLE_MESSAGES = [
     'That should do it! Now, listen closely. ' // because now I\'m going to tell you what I have remaining. '
 ];
 const ANSWERPROMPT_MESSAGE = 'What\'s Missing?';
-const CORRECTANSWER_SOUND = "<audio src='https://s3.amazonaws.com/ask-soundlibrary/ui/gameshow/amzn_ui_sfx_gameshow_positive_response_03.mp3'/>";
+const CORRECTANSWER_SOUND = "<audio src='https://s3.amazonaws.com/ask-soundlibrary/ui/gameshow/amzn_ui_sfx_gameshow_positive_response_02.mp3'/>";
 const CORRECTANSWER_MESSAGES = [
     '<say-as interpret-as="interjection">Well done</say-as>! That\'s the right answer! ',
     '<say-as interpret-as="interjection">Yes</say-as>! That\'s  correct, well done! ',
@@ -394,7 +394,7 @@ const ITEM_LIST = [
     {"noun" : "biscuit", "article" : "a", "synonyms" : ["cookie"]},
     {"noun" : "car", "article" : "a"},
     {"noun" : "train", "article" : "a"},
-    {"noun" : "cat", "article" : "a", "synonyms" : ["kitty", "kitten", "pussy", "pussy cat"]},
+    {"noun" : "cat", "article" : "a", "synonyms" : ["kitty", "kitten", "pussy", "pussy cat","push cat"]},
     {"noun" : "dog", "article" : "a", "synonyms" : ["puppy", "pup", "doggo", "mutt"]},
     {"noun" : "sheep", "article" : "a"}
 ];
