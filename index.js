@@ -98,13 +98,13 @@ const StartGameHandler = {
         return request.type === 'IntentRequest' &&
             (request.intent.name === 'StartGameIntent' ||
             request.intent.name === 'AMAZON.StartOverIntent' ||
-            request.intent.name === 'AMAZON.YesIntent'); // &&
-            //attributes.state !== 'playing';
+            (request.intent.name === 'AMAZON.YesIntent' &&
+            (attributes.state !== 'playing' || attributes.state !== null)));
     },
     handle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         const attributes = handlerInput.attributesManager.getSessionAttributes();
-        if (attributes.difficulty == null) { // How many items to put in the list? Goes up by 1 every win
+        if (attributes.difficulty === null) { // How many items to put in the list? Goes up by 1 every win
             attributes.difficulty = STARTING_DIFFICULTY;
         }
         if (attributes.difficulty < STARTING_DIFFICULTY) {
@@ -153,7 +153,7 @@ const QuitHandler = {
             (request.intent.name === 'AMAZON.StopIntent' ||
             request.intent.name === 'AMAZON.CancelIntent' ||
                 (request.intent.name === 'AMAZON.NoIntent' &&
-                attributes.state !== 'playing')
+                (attributes.state !== 'playing' && attributes.state !== null))
             );
     },
     handle(handlerInput) {
@@ -194,8 +194,8 @@ const FallbackHandler = {
         const attributes = handlerInput.attributesManager.getSessionAttributes();
         return request.type === 'IntentRequest' &&
                 (request.intent.name === 'AMAZON.FallbackIntent' || 
-                ((request.intent.name === 'AMAZON.YesIntent' || request.intent.name === 'AMAZON.NoIntent') && // Yes or No in the middle of a game
-                attributes.state === 'playing') || 
+                ((request.intent.name === 'AMAZON.YesIntent' || request.intent.name === 'AMAZON.NoIntent') && // Yes or No in the middle of a game or as an invocation
+                (attributes.state === 'playing' || attributes.state === null)) || 
                 (request.intent.name === 'AnswerIntent' && attributes.state !== 'playing') // Answer given when not in a game
                 );
     },
