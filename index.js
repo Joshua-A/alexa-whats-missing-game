@@ -203,6 +203,8 @@ const FallbackHandler = {
         if (attributes.state === 'playing') {
             reprompt += ANSWERPROMPT_MESSAGE;
         } else { 
+            attributes.state === 'playing';
+            handlerInput.attributesManager.setSessionAttributes(attributes);
             reprompt += READY_MESSAGE;
         }
         return handlerInput.responseBuilder
