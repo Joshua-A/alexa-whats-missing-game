@@ -69,7 +69,7 @@ const GOODBYE_MESSAGES = [
 const FALLBACK_MESSAGE = 'I\'m sorry, I\'m not sure what you are trying to do. \
 You can always say help to hear instructions, or say restart to start a new game. ';
 
-const STARTING_DIFFICULTY = 4; // Number of items in first round
+const STARTING_DIFFICULTY = 3; // Number of items in first round
 
 /* HANDLERS */
 
