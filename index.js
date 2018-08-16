@@ -105,10 +105,10 @@ const StartGameHandler = {
         const request = handlerInput.requestEnvelope.request;
         const attributes = handlerInput.attributesManager.getSessionAttributes();
         if (attributes.difficulty == null) { // How many items to put in the list? Goes up by 1 every win
-            attributes.difficulty = 3;
+            attributes.difficulty = STARTING_DIFFICULTY;
         }
-        if (attributes.difficulty < 3) {
-            attributes.difficulty = 3;
+        if (attributes.difficulty < STARTING_DIFFICULTY) {
+            attributes.difficulty = STARTING_DIFFICULTY;
         }
         handlerInput.attributesManager.setSessionAttributes(attributes);
         var responseMessage = '';
