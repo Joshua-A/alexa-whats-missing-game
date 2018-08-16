@@ -192,8 +192,7 @@ const FallbackHandler = {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         const attributes = handlerInput.attributesManager.getSessionAttributes();
-        return request.type === 'IntentRequest' &&
-                (request.intent.name === 'AMAZON.FallbackIntent' || 
+        return (request.intent.name === 'AMAZON.FallbackIntent' || 
                 ((request.intent.name === 'AMAZON.YesIntent' || request.intent.name === 'AMAZON.NoIntent') && // Yes or No in the middle of a game or as an invocation
                 (attributes.state === 'playing' || attributes.state === null)) || 
                 (request.intent.name === 'AnswerIntent' && attributes.state !== 'playing') // Answer given when not in a game
