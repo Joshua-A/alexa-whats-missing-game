@@ -99,7 +99,7 @@ const StartGameHandler = {
             (request.intent.name === 'StartGameIntent' ||
             request.intent.name === 'AMAZON.StartOverIntent' ||
             (request.intent.name === 'AMAZON.YesIntent' &&
-            (attributes.state !== 'playing' || attributes.state !== null)));
+            (attributes.state === 'start' || attributes.state === 'gameover')));
     },
     handle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
@@ -153,7 +153,7 @@ const QuitHandler = {
             (request.intent.name === 'AMAZON.StopIntent' ||
             request.intent.name === 'AMAZON.CancelIntent' ||
                 (request.intent.name === 'AMAZON.NoIntent' &&
-                (attributes.state !== 'playing' && attributes.state !== null))
+                (attributes.state === 'start' || attributes.state === 'gameover'))
             );
     },
     handle(handlerInput) {
