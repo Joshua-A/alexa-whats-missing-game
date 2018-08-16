@@ -104,7 +104,7 @@ const StartGameHandler = {
     handle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         const attributes = handlerInput.attributesManager.getSessionAttributes();
-        if (attributes.difficulty === null) { // How many items to put in the list? Goes up by 1 every win
+        if (attributes.difficulty == null) { // How many items to put in the list? Goes up by 1 every win
             attributes.difficulty = STARTING_DIFFICULTY;
         }
         if (attributes.difficulty < STARTING_DIFFICULTY) {
@@ -203,7 +203,7 @@ const FallbackHandler = {
         if (attributes.state === 'playing') {
             reprompt += ANSWERPROMPT_MESSAGE;
         } else { 
-            if (attributes.state === null) {
+            if (attributes.state == null) {
                 attributes.state = 'start';
                 handlerInput.attributesManager.setSessionAttributes(attributes);
             }
