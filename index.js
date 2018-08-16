@@ -69,6 +69,8 @@ const GOODBYE_MESSAGES = [
 const FALLBACK_MESSAGE = 'I\'m sorry, I\'m not sure what you are trying to do. \
 You can always say help to hear instructions, or say restart to start a new game. ';
 
+const STARTING_DIFFICULTY = 4; // Number of items in first round
+
 /* HANDLERS */
 
 // Launch Request
@@ -96,8 +98,8 @@ const StartGameHandler = {
         return request.type === 'IntentRequest' &&
             (request.intent.name === 'StartGameIntent' ||
             request.intent.name === 'AMAZON.StartOverIntent' ||
-            request.intent.name === 'AMAZON.YesIntent') &&
-            attributes.state !== 'playing';
+            request.intent.name === 'AMAZON.YesIntent'); // &&
+            //attributes.state !== 'playing';
     },
     handle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
@@ -110,7 +112,8 @@ const StartGameHandler = {
         }
         handlerInput.attributesManager.setSessionAttributes(attributes);
         var responseMessage = '';
-        if (request.intent.name === 'AMAZON.StartOverIntent') {
+        if (request.intent.name === 'AMAZON.StartOverIntent' || 
+            (attributes.state === 'playing' && request.intent.name === 'StartGameIntent')) {
             responseMessage += RESTART_MESSAGE;
         } else {
             responseMessage += pickRandomListItem(STARTNEW_MESSAGES);
@@ -192,7 +195,9 @@ const FallbackHandler = {
         return request.type === 'IntentRequest' &&
                 (request.intent.name === 'AMAZON.FallbackIntent' || 
                 ((request.intent.name === 'AMAZON.YesIntent' || request.intent.name === 'AMAZON.NoIntent') && // Yes or No in the middle of a game
-                attributes.state === 'playing'));
+                attributes.state === 'playing') || 
+                (request.intent.name === 'AnswerIntent' && attributes.state !== 'playing') // Answer given when not in a game
+                );
     },
     handle(handlerInput) {
         const attributes = handlerInput.attributesManager.getSessionAttributes();
