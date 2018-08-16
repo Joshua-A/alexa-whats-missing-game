@@ -149,12 +149,13 @@ const QuitHandler = {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         const attributes = handlerInput.attributesManager.getSessionAttributes();
-        return request.type === 'IntentRequest' &&
+        return request.type === 'SessionEndedRequest' || 
+            (request.type === 'IntentRequest' &&
             (request.intent.name === 'AMAZON.StopIntent' ||
             request.intent.name === 'AMAZON.CancelIntent' ||
                 (request.intent.name === 'AMAZON.NoIntent' &&
                 (attributes.state === 'start' || attributes.state === 'gameover'))
-            );
+            ));
     },
     handle(handlerInput) {
         return handlerInput.responseBuilder
