@@ -417,7 +417,7 @@ const ITEM_LIST = [
     {"noun":"bird","article":"a"},
     {"noun":"turtle","article":"a"},
     {"noun":"frog","article":"a"},
-    {"noun":"octopus","article":"a"},
+    {"noun":"octopus","article":"an"},
     {"noun":"crab","article":"a"},
     {"noun":"elephant","article":"an"},
     {"noun":"zebra","article":"a"},
