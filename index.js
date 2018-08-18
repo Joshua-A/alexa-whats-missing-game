@@ -15,8 +15,8 @@ const WELCOME_MESSAGE =
 If this is your first time playing, say <say-as interpret-as="interjection">help</say-as>, \
 and I\'ll go through the instructions with you. Otherwise, tell me when you\'re ready, and I\'ll begin.';
 const INSTRUCTIONS_MESSAGE = 
-'In this game, I will list off some items I have here with me. \
-Remember what I say, because I\'m going to shuffle them up and remove one item. \
+'In this game, I will start by listing off a few items. \
+Remember these, because I\'m then going to shuffle them up and remove one item. \
 When I\'m done, it will be your job to tell me which item I have removed. \
 Remember, answers such as, <prosody rate="slow" pitch="high"><say-as interpret-as="interjection">an</say-as></prosody> apple, are better than just, apple. So, ';
 const READY_MESSAGE = 'Are you ready to play?';
