@@ -16,7 +16,7 @@ If this is your first time playing, say <say-as interpret-as="interjection">help
 and I\'ll go through the instructions with you. Otherwise, tell me when you\'re ready, and I\'ll begin.';
 const INSTRUCTIONS_MESSAGE = 
 'In this game, I will start by listing off a few items. \
-Remember these, because I\'m then going to shuffle them up and remove one item. \
+Remember them, because I\'m then going to shuffle them up and remove one item. \
 When I\'m done, it will be your job to tell me which item I have removed. \
 Remember, answers such as, <prosody rate="slow" pitch="high"><say-as interpret-as="interjection">an</say-as></prosody> apple, are better than just, apple. So, ';
 const READY_MESSAGE = 'Are you ready to play?';
@@ -33,9 +33,9 @@ const PRESHUFFLE_MESSAGES = [
 ];
 const SHUFFLE_SOUND = "<audio src='https://s3.amazonaws.com/ask-soundlibrary/foley/amzn_sfx_swoosh_cartoon_fast_02.mp3'/>";
 const POSTSHUFFLE_MESSAGES = [
-    'All done! Now, listen carefully. ', // while I tell you what I have left. ',
-    'There we go! Now, pay close attention. ', // as I tell you what I\'m left with. ',
-    'That should do it! Now, listen closely. ' // because now I\'m going to tell you what I have remaining. '
+    'All done! Now, ', // listen carefully while I tell you what I have left. ',
+    'There we go! Now, ', // pay close attention as I tell you what I\'m left with. ',
+    'That should do it! Now, ' // listen closely because now I\'m going to tell you what I have remaining. '
 ];
 const ANSWERPROMPT_MESSAGE = 'What\'s Missing?';
 const CORRECTANSWER_SOUND = "<audio src='https://s3.amazonaws.com/ask-soundlibrary/ui/gameshow/amzn_ui_sfx_gameshow_positive_response_02.mp3'/>";
@@ -45,8 +45,15 @@ const CORRECTANSWER_MESSAGES = [
     'That\'s absolutely right! Well done! ',
     '<say-as interpret-as="interjection">Hooray</say-as>! You got it right! Well done! '
 ];
-const INAROW_PREPRESSAGE = 'That\'s ';
+const INAROW_PREMESSAGE = 'That\'s ';
 const INAROW_POSTMESSAGE = ' in a row! ';
+const INAROW_INCORRECT_PREMESSAGE = 'You got ';
+const INAROW_INCORRECT_POSTMESSAGES = [
+    ' rounds in a row correct though, so well done! ',
+    ' rounds correct in a row though, that\'s pretty impressive! ',
+    ' rounds in a row right though, so give yourself a pat on the back! ',
+    ' rounds right in a row though, great job! '
+];
 const INCREASEDIFFICULTY_MESSAGES = [
     'I\'ll have to make the next one a bit harder for you. ',
     'Don\'t worry, I\'ll make the next one a little trickier. ',
@@ -59,7 +66,8 @@ const INCORRECTANSWER_MESSAGES = [
     'Sorry, that\'s not it. ',
     'I\'m afraid not. '
 ];
-const GIVECORRECT_MESSAGE = 'The correct answer was ';
+const INCORRECTANSWER_IHEARD = 'You answered, ';
+const INCORRECTANSWER_GIVECORRECT = ', but the correct answer was ';
 const ASKNEWGAME_MESSAGE = 'Would you like to play another round? ';
 const GOODBYE_MESSAGES = [
     'See you later! ',
@@ -68,6 +76,7 @@ const GOODBYE_MESSAGES = [
 ];
 const FALLBACK_MESSAGE = 'I\'m sorry, I\'m not sure what you are trying to do. \
 You can always say help to hear instructions, or say restart to start a new game. ';
+const FALLBACK_MESSAGE_SHORT = 'I\'m sorry, I\'m not sure what you are trying to do. ';
 
 const STARTING_DIFFICULTY = 3; // Number of items in first round
 
@@ -200,7 +209,9 @@ const FallbackHandler = {
     },
     handle(handlerInput) {
         const attributes = handlerInput.attributesManager.getSessionAttributes();
+        var fallbackMsg = '';
         var reprompt = '';
+        // The end of the message will prompt for an answer or to start a game, depending on the game state
         if (attributes.state === 'playing') {
             reprompt += ANSWERPROMPT_MESSAGE;
         } else { 
@@ -210,8 +221,15 @@ const FallbackHandler = {
             }
             reprompt += READY_MESSAGE;
         }
+        // Give the short version next time
+        if (attributes.heardFallback == null) {
+            fallbackMsg = FALLBACK_MESSAGE;
+            attributes.heardFallback = true;
+        } else {
+            fallbackMsg = FALLBACK_MESSAGE_SHORT;
+        }
         return handlerInput.responseBuilder
-            .speak(FALLBACK_MESSAGE + reprompt)
+            .speak(fallbackMsg + reprompt)
             .reprompt(reprompt)
             .getResponse();
     }
@@ -365,6 +383,7 @@ function resolveAnswer(handlerInput) {
     //Set game state
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     attributes.state = 'gameover';
+    // Calculate new combo of correct rounds in a row
     if (attributes.combo == null || attributes.combo < 1) {
         attributes.combo = 1;
     } else {
@@ -375,16 +394,20 @@ function resolveAnswer(handlerInput) {
     const correctAnswer = attributes.removedItem;
     const playerAnswer = handlerInput.requestEnvelope.request.intent.slots.answer.value;
     const isPlayerCorrect = checkAnswer(correctAnswer, playerAnswer);
-    if (isPlayerCorrect) {
+    if (isPlayerCorrect) { // Right answer
         response += CORRECTANSWER_SOUND + pickRandomListItem(CORRECTANSWER_MESSAGES);
         if (attributes.combo > 1) {
-            response += INAROW_PREPRESSAGE + attributes.combo + INAROW_POSTMESSAGE;
+            response += INAROW_PREMESSAGE + attributes.combo + INAROW_POSTMESSAGE;
         }
         response += pickRandomListItem(INCREASEDIFFICULTY_MESSAGES);
         attributes.difficulty = attributes.difficulty + 1;
-    } else {
+    } else { // Wrong answer
         response += INCORRECTANSWER_SOUND + pickRandomListItem(INCORRECTANSWER_MESSAGES) + 
-                    GIVECORRECT_MESSAGE + correctAnswer.article + ' ' + correctAnswer.noun + '. ';
+                    INCORRECTANSWER_IHEARD + playerAnswer +
+                    INCORRECTANSWER_GIVECORRECT + correctAnswer.article + ' ' + correctAnswer.noun + '. ';
+        if (attributes.combo > 1) {
+            reponse += INAROW_INCORRECT_PREMESSAGE + attributes.combo + pickRandomListItem(INAROW_INCORRECT_POSTMESSAGES);
+        }
         attributes.combo = 0;
     }
     handlerInput.attributesManager.setSessionAttributes(attributes);
