@@ -406,7 +406,7 @@ function resolveAnswer(handlerInput) {
                     INCORRECTANSWER_IHEARD + playerAnswer +
                     INCORRECTANSWER_GIVECORRECT + correctAnswer.article + ' ' + correctAnswer.noun + '. ';
         if (attributes.combo > 1) {
-            reponse += INAROW_INCORRECT_PREMESSAGE + attributes.combo + pickRandomListItem(INAROW_INCORRECT_POSTMESSAGES);
+            response += INAROW_INCORRECT_PREMESSAGE + attributes.combo + pickRandomListItem(INAROW_INCORRECT_POSTMESSAGES);
         }
         attributes.combo = 0;
     }
