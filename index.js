@@ -18,7 +18,7 @@ const INSTRUCTIONS_MESSAGE =
 'In this game, I will start by listing off a few items. \
 Remember them, because I\'m then going to shuffle them up and remove one item. \
 When I\'m done, it will be your job to tell me which item I have removed. \
-Remember, answers such as, <prosody rate="slow" pitch="high"><say-as interpret-as="interjection">an</say-as></prosody> apple, are better than just, apple. So, ';
+Remember, answers such as, <emphasis level="strong">an</emphasis> apple, are better than just, apple. So, ';
 const READY_MESSAGE = 'Are you ready to play?';
 const RESTART_MESSAGE = 'Alright, let\'s start again. ';
 const STARTNEW_MESSAGES = [
@@ -42,7 +42,7 @@ const CORRECTANSWER_SOUND = "<audio src='https://s3.amazonaws.com/ask-soundlibra
 const CORRECTANSWER_MESSAGES = [
     '<say-as interpret-as="interjection">Well done</say-as>! That\'s the right answer! ',
     '<say-as interpret-as="interjection">Yes</say-as>! That\'s  correct, well done! ',
-    'That\'s absolutely right! Well done! ',
+    'That\'s absolutely right! <say-as interpret-as="interjection">Well done</say-as>! ',
     '<say-as interpret-as="interjection">Hooray</say-as>! You got it right! Well done! '
 ];
 const INAROW_PREMESSAGE = 'That\'s ';
@@ -50,14 +50,14 @@ const INAROW_POSTMESSAGE = ' in a row! ';
 const INAROW_INCORRECT_PREMESSAGE = 'You got ';
 const INAROW_INCORRECT_POSTMESSAGES = [
     ' rounds in a row correct though, so well done! ',
-    ' rounds correct in a row though, that\'s pretty impressive! ',
+    ' rounds correct in a row though, that\'s <say-as interpret-as="interjection">pretty impressive</say-as>! ',
     ' rounds in a row right though, so give yourself a pat on the back! ',
-    ' rounds right in a row though, great job! '
+    ' rounds right in a row though, <say-as interpret-as="interjection">great job</say-as>! '
 ];
 const INCREASEDIFFICULTY_MESSAGES = [
-    'I\'ll have to make the next one a bit harder for you. ',
-    'Don\'t worry, I\'ll make the next one a little trickier. ',
-    ' I\'ll make the next round a little more difficult. '
+    'I\'ll have to make the <prosody pitch="+10%">next</prosody> one a bit harder for you. ',
+    'Don\'t worry, I\'ll make the <prosody pitch="+10%">next</prosody> one a little trickier. ',
+    ' I\'ll make the <prosody pitch="+10%">next</prosody> round a little more difficult. '
 ];
 const INCORRECTANSWER_SOUND = "<audio src='https://s3.amazonaws.com/ask-soundlibrary/ui/gameshow/amzn_ui_sfx_gameshow_negative_response_02.mp3'/>";
 const INCORRECTANSWER_MESSAGES = [
@@ -409,6 +409,7 @@ function resolveAnswer(handlerInput) {
             response += INAROW_INCORRECT_PREMESSAGE + (attributes.combo - 1) + pickRandomListItem(INAROW_INCORRECT_POSTMESSAGES);
         }
         attributes.combo = 0;
+        attributes.difficulty = STARTING_DIFFICULTY;
     }
     handlerInput.attributesManager.setSessionAttributes(attributes);
     // Prompt for a new game
