@@ -22,6 +22,10 @@
                 {
                     "name": "AMAZON.YesIntent",
                     "samples": [
+                        "Go for it",
+                        "Definitely",
+                        "Sure",
+                        "Yes I am",
                         "I would love to",
                         "I'd love to",
                         "I would",
@@ -30,7 +34,12 @@
                 },
                 {
                     "name": "AMAZON.NoIntent",
-                    "samples": []
+                    "samples": [
+                        "No thank you",
+                        "No thanks",
+                        "Nah",
+                        "Nope"
+                    ]
                 },
                 {
                     "name": "StartGameIntent",
@@ -178,9 +187,10 @@
                         {
                             "name": "answer",
                             "type": "AMAZON.SearchQuery",
-                            "confirmationRequired": false,
+                            "confirmationRequired": true,
                             "elicitationRequired": true,
                             "prompts": {
+                                "confirmation": "Confirm.Slot.676594777019.1001508993425",
                                 "elicitation": "Elicit.Slot.895177176861.455599792889"
                             }
                         }
@@ -220,6 +230,27 @@
                     {
                         "type": "PlainText",
                         "value": "Did you say {answer} ?"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Slot.676594777019.1001508993425",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Just to check, did you say {answer} ?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Was that {answer} ?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Just to confirm, did you say {answer} ?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "I heard {answer} , is that correct?"
                     }
                 ]
             }
