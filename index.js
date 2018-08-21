@@ -406,7 +406,7 @@ function resolveAnswer(handlerInput) {
                     INCORRECTANSWER_IHEARD + playerAnswer +
                     INCORRECTANSWER_GIVECORRECT + correctAnswer.article + ' ' + correctAnswer.noun + '. ';
         if (attributes.combo > 1) {
-            response += INAROW_INCORRECT_PREMESSAGE + attributes.combo + pickRandomListItem(INAROW_INCORRECT_POSTMESSAGES);
+            response += INAROW_INCORRECT_PREMESSAGE + (attributes.combo - 1) + pickRandomListItem(INAROW_INCORRECT_POSTMESSAGES);
         }
         attributes.combo = 0;
     }
@@ -486,7 +486,7 @@ const ITEM_LIST = [
     {"noun":"sink","article":"a","synonyms":["basin","wash basin"]},
     {"noun":"sofa","article":"a","synonyms":["couch","settee","divan"]},
     // Clothing
-    {"noun":"shirt","article":"a","synonyms":["t-shirt","T shirt"]},
+    {"noun":"shirt","article":"a","synonyms":["t-shirt","T shirt","top"]},
     {"noun":"skirt","article":"a","synonyms":["dress"]},
     {"noun":"necklace","article":"a","synonyms":["pendant","locket"]},
     {"noun":"sock","article":"a"},
