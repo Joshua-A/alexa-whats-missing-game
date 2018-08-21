@@ -113,13 +113,15 @@ const StartGameHandler = {
     handle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         const attributes = handlerInput.attributesManager.getSessionAttributes();
-        if (attributes.difficulty == null) { // How many items to put in the list? Goes up by 1 every win
+        // How many items to put in the list? Goes up by 1 every win
+        if (attributes.difficulty == null) {
             attributes.difficulty = STARTING_DIFFICULTY;
         }
         if (attributes.difficulty < STARTING_DIFFICULTY) {
             attributes.difficulty = STARTING_DIFFICULTY;
         }
         handlerInput.attributesManager.setSessionAttributes(attributes);
+        // Slightly different response, depending on if this is a new game or a restarted game
         var responseMessage = '';
         if (request.intent.name === 'AMAZON.StartOverIntent' || 
             (attributes.state === 'playing' && request.intent.name === 'StartGameIntent')) {
@@ -127,6 +129,7 @@ const StartGameHandler = {
         } else {
             responseMessage += pickRandomListItem(STARTNEW_MESSAGES);
         }
+        // Play a round
         responseMessage += playRound(handlerInput, attributes.difficulty);
         return handlerInput.responseBuilder
             .speak(responseMessage)
@@ -183,6 +186,7 @@ const HelpHandler = {
     handle(handlerInput) {
         const attributes = handlerInput.attributesManager.getSessionAttributes();
         var response = INSTRUCTIONS_MESSAGE;
+        // The end of the message will prompt for an answer or to start a game, depending on the game state
         var endResponse = '';
         if (attributes.state !== 'playing') {
             endResponse += READY_MESSAGE;
@@ -221,10 +225,9 @@ const FallbackHandler = {
             }
             reprompt += READY_MESSAGE;
         }
-        // Give the short version next time
         if (attributes.heardFallback == null) {
             fallbackMsg = FALLBACK_MESSAGE;
-            attributes.heardFallback = true;
+            attributes.heardFallback = true; // Give the short version next time
         } else {
             fallbackMsg = FALLBACK_MESSAGE_SHORT;
         }
@@ -326,8 +329,8 @@ function readList(itemList) {
             }
             returnString += itemList[i].article + ' ' + itemList[i].noun + ', ';
         }
+        returnString = returnString.substring(0, returnString.length - 2); // Trim off the last comma
     }
-    returnString = returnString.substring(0, returnString.length - 2);
     returnString += '. ';
     return returnString;
 }
@@ -405,9 +408,10 @@ function resolveAnswer(handlerInput) {
         response += INCORRECTANSWER_SOUND + pickRandomListItem(INCORRECTANSWER_MESSAGES) + 
                     INCORRECTANSWER_IHEARD + playerAnswer +
                     INCORRECTANSWER_GIVECORRECT + correctAnswer.article + ' ' + correctAnswer.noun + '. ';
-        if (attributes.combo > 1) {
+        if (attributes.combo > 2) { // Had a combo going
             response += INAROW_INCORRECT_PREMESSAGE + (attributes.combo - 1) + pickRandomListItem(INAROW_INCORRECT_POSTMESSAGES);
         }
+        // Reset combos and difficulty levels
         attributes.combo = 0;
         attributes.difficulty = STARTING_DIFFICULTY;
     }
