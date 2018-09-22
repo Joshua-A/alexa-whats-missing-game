@@ -29,7 +29,14 @@ const STARTNEW_MESSAGES = [
 const PRESHUFFLE_MESSAGES = [
     'Now, I\'m going to remove one. Wait just a moment! ',
     'Now, I\'m going to take one away. Bear with me! ',
-    'Now, I\'m going to get rid of one. Be right back! '
+    'Now, I\'m going to get rid of one. Be right back! ',
+    'Now, I\'ll take one away. Hold on! ',
+    'I\'m going to hide one now. I\'ll be back in a second! ',
+    'Now, time to get rid of one! ',
+    'Now, hold one while I throw one away! ',
+    'Now, let\'s throw something away! ',
+    'That\'s a lot of things! Let\'s get rid of something! ',
+    'Hm, that seems like one too many. Wait just a moment! '
 ];
 const SHUFFLE_SOUND = "<audio src='https://s3.amazonaws.com/ask-soundlibrary/foley/amzn_sfx_swoosh_cartoon_fast_02.mp3'/>";
 const POSTSHUFFLE_MESSAGES = [
@@ -238,6 +245,20 @@ const FallbackHandler = {
     }
 };
 
+const ErrorHandler = {
+    canHandle() {
+      return true;
+    },
+    handle(handlerInput, error) {
+      console.log(`Error handled: ${error.message}`);
+  
+      return handlerInput.responseBuilder
+        .speak(FALLBACK_MESSAGE_SHORT + "Can you repeat that?")
+        .reprompt(FALLBACK_MESSAGE_SHORT + "Can you repeat that?")
+        .getResponse();
+    },
+  };
+
 /* Skills builder */
 const skillBuilder = Alexa.SkillBuilders.custom();
 exports.handler = skillBuilder.addRequestHandlers(
@@ -246,7 +267,8 @@ exports.handler = skillBuilder.addRequestHandlers(
         AnswerHandler,
         QuitHandler,
         HelpHandler,
-        FallbackHandler
+        FallbackHandler,
+        ErrorHandler
     ).lambda();
 
 
