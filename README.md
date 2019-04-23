@@ -18,22 +18,22 @@ If the user is correct, they get verbally patted on the back, and offered anothe
   * Intent Slot: Answer
   * Runs a new round, see above.
 * AMAZON.HelpIntent
-Tells the user how to play
+  * Tells the user how to play
 * AMAZON.YesIntent
-Typically in response to being offered to start a new game
+  * Typically in response to being offered to start a new game
 * AMAZON.NoIntent
-Typically in response to being offered to start a new game
+  * Typically in response to being offered to start a new game
 * AMAZON.CancelIntent
-Quit the game
+  * Quit the game
 * AMAZON.StopIntent
-Quit the game
+  * Quit the game
 * AMAZON.FallbackIntent
-Handles unexpected utterances
+  * Handles unexpected utterances
 
 ## Slot Types
 * Item
-Trained with about 100 objects (Animals, Food, Clothes, Furniture, Misc) plus synonyms
-Also picks up help utterances, to allow users to get the help spiel mid-game without coming out of the round. Alexa then reprompts once the help has been read out.
+  * Trained with about 100 objects (Animals, Food, Clothes, Furniture, Misc) plus synonyms
+  * Also picks up help utterances, to allow users to get the help spiel mid-game without coming out of the round. Alexa then reprompts once the help has been read out.
 
 ## To Do
 * Move from hardcoded item list to database solution
