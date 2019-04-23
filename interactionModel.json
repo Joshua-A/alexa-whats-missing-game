@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "whats missing",
+            "invocationName": "what's missing",
             "intents": [
                 {
                     "name": "AMAZON.FallbackIntent",
@@ -20,19 +20,6 @@
                     "samples": []
                 },
                 {
-                    "name": "AMAZON.YesIntent",
-                    "samples": [
-                        "Go for it",
-                        "Definitely",
-                        "Sure",
-                        "Yes I am",
-                        "I would love to",
-                        "I'd love to",
-                        "I would",
-                        "I am"
-                    ]
-                },
-                {
                     "name": "AMAZON.NoIntent",
                     "samples": [
                         "No thank you",
@@ -43,8 +30,89 @@
                 },
                 {
                     "name": "StartGameIntent",
-                    "slots": [],
+                    "slots": [
+                        {
+                            "name": "answer",
+                            "type": "Item",
+                            "samples": [
+                                "{answer}",
+                                "I think it's a {answer}",
+                                "I think it's an {answer}",
+                                "I think it's the {answer}",
+                                "I think it's {answer}",
+                                "a {answer} is missing",
+                                "a {answer}",
+                                "an {answer} is missing",
+                                "an {answer}",
+                                "the {answer} is missing",
+                                "the {answer}",
+                                "{answer} is missing",
+                                "I think it was a {answer}",
+                                "I think it was an {answer}",
+                                "I think it was the {answer}",
+                                "I think it was {answer}",
+                                "is it a {answer}",
+                                "is it an {answer}",
+                                "is it the {answer}",
+                                "is it {answer}",
+                                "it is a {answer}",
+                                "it is an {answer}",
+                                "it is the {answer}",
+                                "it is {answer}",
+                                "it was a {answer}",
+                                "it was an {answer}",
+                                "it was the {answer}",
+                                "it was {answer}",
+                                "it's a {answer}",
+                                "it's an {answer}",
+                                "it's the {answer}",
+                                "it's {answer}",
+                                "maybe a {answer}",
+                                "maybe an {answer}",
+                                "maybe the {answer}",
+                                "maybe {answer}",
+                                "uhh a {answer}",
+                                "uhh an {answer}",
+                                "uhh the {answer}",
+                                "uhh {answer}",
+                                "umm a {answer}",
+                                "umm an {answer}",
+                                "umm the {answer}",
+                                "umm {answer}",
+                                "was it a {answer}",
+                                "was it an {answer}",
+                                "was it the {answer}",
+                                "was it {answer}",
+                                "you're missing a {answer}",
+                                "you're missing an {answer}",
+                                "you're missing the {answer}",
+                                "you're missing {answer}",
+                                "the answer is a {answer}",
+                                "the answer was a {answer}",
+                                "an {answer} is missing",
+                                "the answer is an {answer}",
+                                "the answer was an {answer}",
+                                "the {answer} is missing",
+                                "the answer is the {answer}",
+                                "the answer was the {answer}"
+                            ]
+                        }
+                    ],
                     "samples": [
+                        "Yeah okay",
+                        "Yeah",
+                        "Alright",
+                        "Okay then",
+                        "Okay",
+                        "For sure",
+                        "Absolutely",
+                        "Of course",
+                        "I will",
+                        "I do",
+                        "Yep",
+                        "Aye",
+                        "Yes please",
+                        "Yes",
                         "begin a game",
                         "start playing",
                         "start a game",
@@ -67,136 +135,768 @@
                         "let's go",
                         "play",
                         "I'm ready",
-                        "start the game"
+                        "start the game",
+                        "Go for it",
+                        "Definitely",
+                        "Sure",
+                        "Yes I am",
+                        "I would love to",
+                        "I'd love to",
+                        "I would",
+                        "I am"
                     ]
                 },
                 {
-                    "name": "AnswerIntent",
-                    "slots": [
-                        {
-                            "name": "answer",
-                            "type": "AMAZON.SearchQuery",
-                            "samples": [
-                                "I said a {answer}",
-                                "I said an {answer}",
-                                "I said the {answer}",
-                                "I said {answer}",
-                                "I said it's a {answer}",
-                                "I said it's an {answer}",
-                                "I said it's the {answer}",
-                                "I said it's {answer}",
-                                "I said it was a {answer}",
-                                "I said it was an {answer}",
-                                "I said it was the {answer}",
-                                "I said it was {answer}",
-                                "I said it is a {answer}",
-                                "I said it is an {answer}",
-                                "I said it is the {answer}",
-                                "I said it is {answer}",
-                                "a {answer} is missing",
-                                "a {answer}",
-                                "an {answer} is missing",
-                                "an {answer}",
-                                "the {answer} is missing",
-                                "the {answer}",
-                                "it was a {answer}",
-                                "it was an {answer}",
-                                "it was the {answer}",
-                                "it was {answer}",
-                                "it is a {answer}",
-                                "it is an {answer}",
-                                "it is the {answer}",
-                                "it is {answer}",
-                                "it's a {answer}",
-                                "it's an {answer}",
-                                "it's the {answer}",
-                                "it's {answer}",
-                                "the {answer}",
-                                "{answer}"
-                            ]
-                        }
-                    ],
-                    "samples": [
-                        "I think it's a {answer}",
-                        "I think it's an {answer}",
-                        "I think it's the {answer}",
-                        "I think it's {answer}",
-                        "a {answer} is missing",
-                        "a {answer}",
-                        "an {answer} is missing",
-                        "an {answer}",
-                        "the {answer} is missing",
-                        "the {answer}",
-                        "{answer} is missing",
-                        "I think it was a {answer}",
-                        "I think it was an {answer}",
-                        "I think it was the {answer}",
-                        "I think it was {answer}",
-                        "is it a {answer}",
-                        "is it an {answer}",
-                        "is it the {answer}",
-                        "is it {answer}",
-                        "it is a {answer}",
-                        "it is an {answer}",
-                        "it is the {answer}",
-                        "it is {answer}",
-                        "it was a {answer}",
-                        "it was an {answer}",
-                        "it was the {answer}",
-                        "it was {answer}",
-                        "it's a {answer}",
-                        "it's an {answer}",
-                        "it's the {answer}",
-                        "it's {answer}",
-                        "maybe a {answer}",
-                        "maybe an {answer}",
-                        "maybe the {answer}",
-                        "maybe {answer}",
-                        "uhh a {answer}",
-                        "uhh an {answer}",
-                        "uhh the {answer}",
-                        "uhh {answer}",
-                        "umm a {answer}",
-                        "umm an {answer}",
-                        "umm the {answer}",
-                        "umm {answer}",
-                        "was it a {answer}",
-                        "was it an {answer}",
-                        "was it the {answer}",
-                        "was it {answer}",
-                        "you're missing a {answer}",
-                        "you're missing an {answer}",
-                        "you're missing the {answer}",
-                        "you're missing {answer}"
-                    ]
-                },
-                {
-                    "name": "AMAZON.StartOverIntent",
+                    "name": "AMAZON.NavigateHomeIntent",
                     "samples": []
                 }
             ],
-            "types": []
-        },
-        "dialog": {
-            "intents": [
+            "types": [
                 {
-                    "name": "AnswerIntent",
-                    "confirmationRequired": false,
-                    "prompts": {},
-                    "slots": [
+                    "name": "Item",
+                    "values": [
                         {
-                            "name": "answer",
-                            "type": "AMAZON.SearchQuery",
-                            "confirmationRequired": true,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "confirmation": "Confirm.Slot.676594777019.1001508993425",
-                                "elicitation": "Elicit.Slot.895177176861.455599792889"
+                            "id": "HELP",
+                            "name": {
+                                "value": "help",
+                                "synonyms": [
+                                    "instructions",
+                                    "what do I do",
+                                    "how do I play",
+                                    "how to play",
+                                    "I need help",
+                                    "help me"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "mic"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "microphone"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "map"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "thimble"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sponge"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "nail"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "lightbulb",
+                                "synonyms": [
+                                    "light bulb"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "flag"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "boomerang"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "towel"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "pillow",
+                                "synonyms": [
+                                    "cushion"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "brick"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "vase"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "phone",
+                                "synonyms": [
+                                    "cell phone",
+                                    "mobile phone",
+                                    "cell",
+                                    "mobile"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "watch",
+                                "synonyms": [
+                                    "wristwatch",
+                                    "wrist watch"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "computer",
+                                "synonyms": [
+                                    "laptop",
+                                    "PC"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "alien",
+                                "synonyms": [
+                                    "E T",
+                                    "extraterrestrial",
+                                    "martian",
+                                    "green man",
+                                    "little green man"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "magnet"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "fan"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "tissue",
+                                "synonyms": [
+                                    "paper towel",
+                                    "tissue paper",
+                                    "handkerchief"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "cup",
+                                "synonyms": [
+                                    "bottle",
+                                    "glass",
+                                    "mug"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "ball"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "photograph",
+                                "synonyms": [
+                                    "picture",
+                                    "photo"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "painting",
+                                "synonyms": [
+                                    "canvas",
+                                    "poster",
+                                    "artwork"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "disco ball"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "magazine",
+                                "synonyms": [
+                                    "mag",
+                                    "comic"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "book",
+                                "synonyms": [
+                                    "workbook",
+                                    "novel",
+                                    "textbook"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "pen",
+                                "synonyms": [
+                                    "pencil"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "stapler"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "kite"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "drumstick",
+                                "synonyms": [
+                                    "drum stick"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "drum"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "tie",
+                                "synonyms": [
+                                    "cravat",
+                                    "bow tie"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "hat",
+                                "synonyms": [
+                                    "cap"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "coat",
+                                "synonyms": [
+                                    "jacket"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "shoe",
+                                "synonyms": [
+                                    "sneaker",
+                                    "boot"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sock"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "necklace",
+                                "synonyms": [
+                                    "locket",
+                                    "pendant"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "dress"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "skirt"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "shirt",
+                                "synonyms": [
+                                    "top",
+                                    "T shirt",
+                                    "t-shirt"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sofa",
+                                "synonyms": [
+                                    "divan",
+                                    "setee",
+                                    "couch"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sink",
+                                "synonyms": [
+                                    "wash basin",
+                                    "basin"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "bed",
+                                "synonyms": [
+                                    "crib",
+                                    "cot",
+                                    "bunk"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "microwave",
+                                "synonyms": [
+                                    "microwave oven"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "oven",
+                                "synonyms": [
+                                    "range"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "cupboard",
+                                "synonyms": [
+                                    "wardrobe",
+                                    "closet",
+                                    "cabinet"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "table"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "chair"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "spaceship",
+                                "synonyms": [
+                                    "rocket ship",
+                                    "rocket",
+                                    "spacecraft"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "bicycle",
+                                "synonyms": [
+                                    "cycle",
+                                    "bike"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "submarine",
+                                "synonyms": [
+                                    "sub"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "boat",
+                                "synonyms": [
+                                    "ship",
+                                    "yacht"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "skateboard",
+                                "synonyms": [
+                                    "board"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "aeroplane",
+                                "synonyms": [
+                                    "plane",
+                                    "airplane"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "train"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "car"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "cookie",
+                                "synonyms": [
+                                    "biscuit"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sausage"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sandwich"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "avocado"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "aubergine",
+                                "synonyms": [
+                                    "eggplant"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "egg"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "steak"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "peanut"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "pepper"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "onion"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "milkshake"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "smoothie"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "cauliflower"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "carrot"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "potato"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "pizza"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "burger"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "cake"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "blueberry"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "raspberry"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "strawberry"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "melon",
+                                "synonyms": [
+                                    "watermelon"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "banana"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "apple"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "zebra"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "elephant"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "crab"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "octopus"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "frog"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "turtle",
+                                "synonyms": [
+                                    "tortoise"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "bird"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "tiger"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "lion"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "snake"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "bear"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "hedgehog",
+                                "synonyms": [
+                                    "porcupine"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "mouse"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "llama"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "donkey"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "goat"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "chicken",
+                                "synonyms": [
+                                    "chick"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "pig",
+                                "synonyms": [
+                                    "piggy"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "horse",
+                                "synonyms": [
+                                    "horsey"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "duck"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "rabbit"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sheep"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "cow"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "fish"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "dog",
+                                "synonyms": [
+                                    "doggy",
+                                    "doggo",
+                                    "puppy",
+                                    "pup"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "cat",
+                                "synonyms": [
+                                    "push cat",
+                                    "pussy cat",
+                                    "pussy",
+                                    "kitty",
+                                    "kitten"
+                                ]
                             }
                         }
                     ]
                 }
             ]
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "StartGameIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "answer",
+                            "type": "Item",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.780844814090.450119963533"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "SKILL_RESPONSE"
         },
         "prompts": [
             {
@@ -251,6 +951,15 @@
                     {
                         "type": "PlainText",
                         "value": "I heard {answer} , is that correct?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.780844814090.450119963533",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What's missing?"
                     }
                 ]
             }
